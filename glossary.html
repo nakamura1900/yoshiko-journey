@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用語図鑑 ― よし子さんの見えない旅</title>
+  <!-- Google Fonts (same as index.html) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Noto+Serif+JP:wght@400;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ========================================================================
+       CSS DESIGN SYSTEM - 用語図鑑 (Glossary)
+       Inherits base tokens from index.html, adds district & term-card system
+       ======================================================================== */
+
+    /* --- CSS Custom Properties (Design Tokens) --- */
+    :root {
+      /* ---- Base Colors (inherited from index.html) ---- */
+      --bg-warm-white: #FFF8F0;
+      --text-dark-navy: #1E293B;
+      --text-sub: #64748B;
+      --border-light: #E2E8F0;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
+      --shadow-hover: 0 12px 36px rgba(0, 0, 0, 0.16);
+
+      /* ---- Typography (inherited from index.html) ---- */
+      --font-sans: 'Noto Sans JP', sans-serif;
+      --font-serif: 'Noto Serif JP', serif;
+      --font-code: 'Fira Code', monospace;
+
+      /* ---- Spacing (inherited from index.html) ---- */
+      --container-max: 1200px;
+      --section-padding: 4rem 2rem;
+
+      /* ---- Transitions (inherited from index.html) ---- */
+      --transition-base: 0.3s ease;
+      --transition-slow: 0.6s ease;
+
+      /* ---- District 1: Network Street (Blue) ---- */
+      --d1-color: #3B82F6;
+      --d1-light: #DBEAFE;
+      --d1-dark: #1E40AF;
+      --d1-gradient: linear-gradient(135deg, #DBEAFE 0%, rgba(219, 234, 254, 0) 80%);
+
+      /* ---- District 2: Browser Square (Purple) ---- */
+      --d2-color: #8B5CF6;
+      --d2-light: #EDE9FE;
+      --d2-dark: #5B21B6;
+      --d2-gradient: linear-gradient(135deg, #EDE9FE 0%, rgba(237, 233, 254, 0) 80%);
+
+      /* ---- District 3: Ad/Measurement Factory (Green) ---- */
+      --d3-color: #10B981;
+      --d3-light: #D1FAE5;
+      --d3-dark: #065F46;
+      --d3-gradient: linear-gradient(135deg, #D1FAE5 0%, rgba(209, 250, 229, 0) 80%);
+
+      /* ---- District 4: Privacy Fortress (Red) ---- */
+      --d4-color: #EF4444;
+      --d4-light: #FEE2E2;
+      --d4-dark: #991B1B;
+      --d4-gradient: linear-gradient(135deg, #FEE2E2 0%, rgba(254, 226, 226, 0) 80%);
+    }
+
+    /* --- Data-district auto-coloring --- */
+    [data-district="1"] { --district-color: var(--d1-color); --district-light: var(--d1-light); --district-dark: var(--d1-dark); --district-gradient: var(--d1-gradient); }
+    [data-district="2"] { --district-color: var(--d2-color); --district-light: var(--d2-light); --district-dark: var(--d2-dark); --district-gradient: var(--d2-gradient); }
+    [data-district="3"] { --district-color: var(--d3-color); --district-light: var(--d3-light); --district-dark: var(--d3-dark); --district-gradient: var(--d3-gradient); }
+    [data-district="4"] { --district-color: var(--d4-color); --district-light: var(--d4-light); --district-dark: var(--d4-dark); --district-gradient: var(--d4-gradient); }
+
+
+    /* --- Reset & Base (same as index.html) --- */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-dark-navy);
+      background-color: var(--bg-warm-white);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      line-height: 1.4;
+    }
+
+    h1 {
+      font-family: var(--font-sans);
+      font-weight: 900;
+      font-size: 2.5rem;
+    }
+
+    h2 {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 2rem;
+    }
+
+    h3 {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+
+    h4 {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+
+    code, pre {
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+    }
+
+    .container {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+
+    /* ========================================================================
+       NAVIGATION
+       ======================================================================== */
+    .main-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 248, 240, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
+      transition: box-shadow var(--transition-base);
+    }
+
+    .main-nav.scrolled {
+      box-shadow: var(--shadow-md);
+    }
+
+    .main-nav__inner {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .main-nav__logo {
+      font-weight: 900;
+      font-size: 1rem;
+      color: var(--text-dark-navy);
+      white-space: nowrap;
+    }
+
+    .main-nav__logo a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .main-nav__links {
+      display: flex;
+      gap: 0.25rem;
+      list-style: none;
+    }
+
+    .main-nav__link {
+      display: block;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      border-radius: 8px;
+      transition: all var(--transition-base);
+      white-space: nowrap;
+    }
+
+    .main-nav__link:hover {
+      color: var(--text-dark-navy);
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .main-nav__link.active {
+      color: var(--text-dark-navy);
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    /* District color indicators for nav links */
+    .main-nav__link[data-district="1"].active { color: var(--d1-color); }
+    .main-nav__link[data-district="2"].active { color: var(--d2-color); }
+    .main-nav__link[data-district="3"].active { color: var(--d3-color); }
+    .main-nav__link[data-district="4"].active { color: var(--d4-color); }
+
+    /* Hamburger Menu */
+    .main-nav__hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .main-nav__hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text-dark-navy);
+      border-radius: 2px;
+      transition: all var(--transition-base);
+    }
+
+    .main-nav__hamburger.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .main-nav__hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .main-nav__hamburger.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+
+    /* ========================================================================
+       COVER (Title Page)
+       ======================================================================== */
+    .cover {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      background: linear-gradient(180deg, #FFF8F0 0%, #FDE8D0 50%, #FFF8F0 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 40%, rgba(139, 92, 246, 0.06) 0%, transparent 40%),
+                  radial-gradient(circle at 40% 70%, rgba(16, 185, 129, 0.06) 0%, transparent 40%),
+                  radial-gradient(circle at 70% 80%, rgba(239, 68, 68, 0.06) 0%, transparent 40%);
+      animation: coverFloat 20s ease-in-out infinite;
+    }
+
+    @keyframes coverFloat {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-2%, -1%); }
+    }
+
+    .cover__badge {
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+      padding: 0.4rem 1.2rem;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--border-light);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .cover__title {
+      position: relative;
+      z-index: 1;
+      font-size: 3rem;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(135deg, var(--d1-color), var(--d2-color), var(--d3-color), var(--d4-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cover__subtitle {
+      position: relative;
+      z-index: 1;
+      font-size: 1.2rem;
+      color: var(--text-sub);
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+      font-family: var(--font-serif);
+    }
+
+    .cover__description {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      line-height: 2;
+      color: var(--text-sub);
+      margin-bottom: 2rem;
+    }
+
+    .cover__scroll-hint {
+      position: relative;
+      z-index: 1;
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-sub);
+      font-size: 0.8rem;
+      animation: scrollHint 2s ease-in-out infinite;
+    }
+
+    .cover__scroll-hint span {
+      display: block;
+      width: 20px;
+      height: 32px;
+      border: 2px solid var(--text-sub);
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .cover__scroll-hint span::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 6px;
+      background: var(--text-sub);
+      border-radius: 3px;
+      animation: scrollDot 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollHint {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    @keyframes scrollDot {
+      0% { top: 6px; opacity: 1; }
+      100% { top: 18px; opacity: 0; }
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .world-map
+       ======================================================================== */
+    .world-map {
+      padding: var(--section-padding);
+    }
+
+    .world-map__title {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+    }
+
+    .world-map__subtitle {
+      text-align: center;
+      font-size: 1rem;
+      color: var(--text-sub);
+      font-family: var(--font-serif);
+      margin-bottom: 2.5rem;
+    }
+
+    .world-map__illustration {
+      max-width: 800px;
+      width: 100%;
+      min-height: 240px;
+      margin: 0 auto 3rem;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.5);
+      border: 2px dashed var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      overflow: hidden;
+    }
+
+    .world-map__illustration img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .world-map__illustration:empty::after {
+      content: 'world map illustration placeholder';
+      opacity: 0.5;
+    }
+
+    .world-map__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .world-map__card {
+      background: #FFFFFF;
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+      transition: all var(--transition-base);
+      cursor: pointer;
+    }
+
+    .world-map__card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-4px);
+    }
+
+    .world-map__card-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+
+    .world-map__card[data-target="1"] .world-map__card-icon { background: var(--d1-light); }
+    .world-map__card[data-target="2"] .world-map__card-icon { background: var(--d2-light); }
+    .world-map__card[data-target="3"] .world-map__card-icon { background: var(--d3-light); }
+    .world-map__card[data-target="4"] .world-map__card-icon { background: var(--d4-light); }
+
+    .world-map__card[data-target="1"]:hover { border-color: var(--d1-color); }
+    .world-map__card[data-target="2"]:hover { border-color: var(--d2-color); }
+    .world-map__card[data-target="3"]:hover { border-color: var(--d3-color); }
+    .world-map__card[data-target="4"]:hover { border-color: var(--d4-color); }
+
+    .world-map__card-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .world-map__card-name {
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .world-map__card[data-target="1"] .world-map__card-name { color: var(--d1-dark); }
+    .world-map__card[data-target="2"] .world-map__card-name { color: var(--d2-dark); }
+    .world-map__card[data-target="3"] .world-map__card-name { color: var(--d3-dark); }
+    .world-map__card[data-target="4"] .world-map__card-name { color: var(--d4-dark); }
+
+    .world-map__card-count {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .district-header
+       ======================================================================== */
+    .district-section {
+      position: relative;
+    }
+
+    .district-header {
+      width: 100%;
+      min-height: 32vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+      background: var(--district-gradient);
+    }
+
+    .district-header__illustration {
+      max-width: 640px;
+      width: 100%;
+      min-height: 180px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.5);
+      border: 2px dashed var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .district-header__illustration img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .district-header__illustration:empty::after {
+      content: 'district illustration placeholder';
+      opacity: 0.5;
+    }
+
+    .district-header__content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .district-header__number {
+      display: inline-block;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+      background: rgba(255, 255, 255, 0.6);
+      color: var(--district-dark);
+      border: 2px solid var(--district-color);
+    }
+
+    .district-header__title {
+      font-size: 2.2rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+      color: var(--district-dark);
+    }
+
+    .district-header__subtitle {
+      font-size: 1.05rem;
+      color: var(--text-sub);
+      margin-bottom: 2rem;
+      font-family: var(--font-serif);
+      max-width: 560px;
+    }
+
+    .district-header__term-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .district-header__chip {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid var(--district-color);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--district-dark);
+      transition: all var(--transition-base);
+    }
+
+    .district-header__chip:hover {
+      background: var(--district-color);
+      color: #FFFFFF;
+    }
+
+    .district-body {
+      padding: var(--section-padding);
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .term-card
+       ======================================================================== */
+    .term-card {
+      background: #FFFFFF;
+      border-radius: 12px;
+      border-left: 4px solid var(--district-color);
+      padding: 0;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-base);
+      overflow: hidden;
+    }
+
+    .term-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .term-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-4px);
+    }
+
+    .term-card__header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border-light);
+      flex-wrap: wrap;
+    }
+
+    .term-card__icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--district-light);
+      border-radius: 12px;
+    }
+
+    .term-card__name {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .term-card__name-ja {
+      display: block;
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--text-dark-navy);
+      line-height: 1.3;
+    }
+
+    .term-card__name-en {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-sub);
+      font-family: var(--font-code);
+      margin-top: 0.15rem;
+    }
+
+    .term-card__oneliner {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--district-dark);
+      background: var(--district-light);
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .term-card__body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .term-card__body p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--text-dark-navy);
+    }
+
+    .term-card__story {
+      padding: 0.75rem 1.5rem;
+      background: #FDF6E3;
+      font-family: var(--font-serif);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-dark-navy);
+      border-top: 1px solid var(--border-light);
+    }
+
+    .term-card__related {
+      padding: 0.75rem 1.5rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .term-card__related::before {
+      content: '関連:';
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-right: 0.25rem;
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .chapter-ref (inline link to main story)
+       ======================================================================== */
+    .chapter-ref {
+      display: inline;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--district-dark);
+      border-bottom: 2px solid var(--district-color);
+      padding-bottom: 1px;
+      transition: all var(--transition-base);
+    }
+
+    .chapter-ref:hover {
+      color: var(--district-color);
+    }
+
+    a.chapter-ref {
+      cursor: pointer;
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .term-tag (pill-shaped related term link)
+       ======================================================================== */
+    .term-tag {
+      display: inline-block;
+      padding: 0.2rem 0.7rem;
+      background: var(--district-light);
+      border: 1px solid var(--district-color);
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--district-dark);
+      transition: all var(--transition-base);
+      cursor: pointer;
+    }
+
+    .term-tag:hover {
+      background: var(--district-color);
+      color: #FFFFFF;
+    }
+
+
+    /* ========================================================================
+       ANIMATIONS
+       ======================================================================== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Scroll-triggered animation */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger delay helpers */
+    .animate-on-scroll.delay-1 { transition-delay: 0.1s; }
+    .animate-on-scroll.delay-2 { transition-delay: 0.2s; }
+    .animate-on-scroll.delay-3 { transition-delay: 0.3s; }
+    .animate-on-scroll.delay-4 { transition-delay: 0.4s; }
+
+
+    /* ========================================================================
+       FOOTER
+       ======================================================================== */
+    .production-notes {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--text-dark-navy);
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.85rem;
+    }
+
+    .production-notes a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: underline;
+    }
+
+    .production-notes a:hover {
+      color: rgba(255, 255, 255, 1);
+    }
+
+    .production-notes__logo {
+      font-weight: 900;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 0.5rem;
+    }
+
+    .production-notes__links {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+
+    /* ========================================================================
+       RESPONSIVE: 768px and below
+       ======================================================================== */
+    @media (max-width: 768px) {
+      html {
+        font-size: 15px;
+      }
+
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.6rem; }
+      h3 { font-size: 1.3rem; }
+
+      .cover {
+        padding: 5rem 1.5rem 3rem;
+        min-height: 60vh;
+      }
+
+      .cover__title {
+        font-size: 2rem;
+      }
+
+      .cover__subtitle {
+        font-size: 1rem;
+      }
+
+      /* Navigation: hamburger mode */
+      .main-nav__hamburger {
+        display: flex;
+      }
+
+      .main-nav__links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: rgba(255, 248, 240, 0.98);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border-light);
+        padding: 0.5rem;
+        box-shadow: var(--shadow-md);
+      }
+
+      .main-nav__links.open {
+        display: flex;
+      }
+
+      .main-nav__link {
+        padding: 0.75rem 1rem;
+      }
+
+      /* World map: 1 column */
+      .world-map__grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* District header */
+      .district-header {
+        min-height: auto;
+        padding: 3rem 1.5rem;
+      }
+
+      .district-header__title {
+        font-size: 1.8rem;
+      }
+
+      /* Container padding */
+      .container {
+        padding: 0 1.25rem;
+      }
+
+      .district-body {
+        padding: 2.5rem 1.25rem;
+      }
+
+      /* Term card header: stack oneliner below */
+      .term-card__header {
+        gap: 0.75rem;
+      }
+
+      .term-card__oneliner {
+        flex-basis: 100%;
+        text-align: center;
+      }
+    }
+
+    /* Medium screens: 769px - 1024px */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .world-map__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====================================================================
+       NAVIGATION
+       ==================================================================== -->
+  <nav class="main-nav" id="mainNav">
+    <div class="main-nav__inner">
+      <div class="main-nav__logo"><a href="index.html">よし子さんの見えない旅</a></div>
+      <button class="main-nav__hamburger" id="hamburger" aria-label="メニュー">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="main-nav__links" id="navLinks">
+        <li><a class="main-nav__link" href="#world-map">全体マップ</a></li>
+        <li><a class="main-nav__link" href="#district-1" data-district="1">地区1</a></li>
+        <li><a class="main-nav__link" href="#district-2" data-district="2">地区2</a></li>
+        <li><a class="main-nav__link" href="#district-3" data-district="3">地区3</a></li>
+        <li><a class="main-nav__link" href="#district-4" data-district="4">地区4</a></li>
+        <li><a class="main-nav__link" href="index.html">本編へ</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <!-- ====================================================================
+       COVER (Title Page)
+       ==================================================================== -->
+  <header class="cover" id="cover">
+    <div class="cover__badge">GLOSSARY - 用語図鑑</div>
+    <h1 class="cover__title">用語図鑑</h1>
+    <p class="cover__subtitle">よし子さんが旅で出会った技術用語たちのガイドブック</p>
+    <p class="cover__description">
+      本編「よし子さんの見えない旅」に登場した専門用語を、<br>
+      4つの「地区」に分類して図解します。<br>
+      街のガイドブックをめくるように、気になる用語を探してみてください。
+    </p>
+    <div class="cover__scroll-hint">
+      <span></span>
+      Scroll to explore
+    </div>
+  </header>
+
+
+  <!-- ====================================================================
+       SECTION: WORLD MAP
+       ==================================================================== -->
+  <section class="world-map" id="world-map">
+    <div class="container">
+      <h2 class="world-map__title animate-on-scroll">用語の世界マップ</h2>
+      <p class="world-map__subtitle animate-on-scroll delay-1">4つの地区で構成された、インターネット技術の街</p>
+
+      <div class="world-map__illustration animate-on-scroll delay-2">
+        <img src="images/world-map.jpeg" alt="用語の世界マップ - 4つの地区で構成されたインターネット技術の街" style="width: 100%; max-width: 800px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+      </div>
+
+      <div class="world-map__grid">
+        <a class="world-map__card animate-on-scroll delay-1" href="#district-1" data-target="1">
+          <div class="world-map__card-icon">🌐</div>
+          <div class="world-map__card-info">
+            <div class="world-map__card-name">地区1: ネットワーク通り</div>
+            <div class="world-map__card-count">DNS, IP, TCP, TLS, HTTP, CDN, リダイレクト（7用語）</div>
+          </div>
+        </a>
+        <a class="world-map__card animate-on-scroll delay-2" href="#district-2" data-target="2">
+          <div class="world-map__card-icon">🖥️</div>
+          <div class="world-map__card-info">
+            <div class="world-map__card-name">地区2: ブラウザ広場</div>
+            <div class="world-map__card-count">Cookie, レンダリング, API, JSON（4用語）</div>
+          </div>
+        </a>
+        <a class="world-map__card animate-on-scroll delay-3" href="#district-3" data-target="3">
+          <div class="world-map__card-icon">📊</div>
+          <div class="world-map__card-info">
+            <div class="world-map__card-name">地区3: 広告・計測工場</div>
+            <div class="world-map__card-count">GTM, sGTM, GA4, CAPI, fbclid, UTM, RTB（7用語）</div>
+          </div>
+        </a>
+        <a class="world-map__card animate-on-scroll delay-4" href="#district-4" data-target="4">
+          <div class="world-map__card-icon">🛡️</div>
+          <div class="world-map__card-info">
+            <div class="world-map__card-name">地区4: プライバシー砦</div>
+            <div class="world-map__card-count">ITP, ATT, SHA256, EMQ, Stape Store, Cookie Keeper（6用語）</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ====================================================================
+       DISTRICT 1: ネットワーク通り
+       ==================================================================== -->
+  <section class="district-section" id="district-1" data-district="1">
+
+    <div class="district-header">
+      <div class="district-header__illustration">
+        <img src="images/district-1.jpeg" alt="地区1: ネットワーク通り" style="width: 100%; max-width: 640px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+      </div>
+      <div class="district-header__content">
+        <div class="district-header__number">DISTRICT 01</div>
+        <h2 class="district-header__title">ネットワーク通り</h2>
+        <p class="district-header__subtitle">
+          データが世界中を駆け巡る通信の大通り。<br>
+          よし子さんがスマホで「検索」を押した瞬間から始まる、目に見えない旅路の舞台。
+        </p>
+        <div class="district-header__term-list">
+          <a class="district-header__chip" href="#term-dns">DNS</a>
+          <a class="district-header__chip" href="#term-ip">IPアドレス</a>
+          <a class="district-header__chip" href="#term-tcp">TCP</a>
+          <a class="district-header__chip" href="#term-tls">TLS/SSL</a>
+          <a class="district-header__chip" href="#term-http">HTTP/HTTPS</a>
+          <a class="district-header__chip" href="#term-cdn">CDN</a>
+          <a class="district-header__chip" href="#term-redirect">リダイレクト</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="district-body container">
+      <!-- DISTRICT-1 CONTENT START -->
+      <!--
+        Available CSS classes for term content:
+        - .term-card                 : Main term card wrapper (full-width, left border accent)
+        - .term-card__header         : Card header with icon, name, oneliner
+        - .term-card__icon           : Emoji/icon in a rounded square
+        - .term-card__name           : Wrapper for ja/en name
+        - .term-card__name-ja        : Japanese term name (large, bold)
+        - .term-card__name-en        : English term name (small, monospace)
+        - .term-card__oneliner       : One-line description pill
+        - .term-card__body           : Technical explanation section (2-3 lines)
+        - .term-card__story          : "In Yoshiko's journey..." story reference
+        - .term-card__related        : Related term tag list
+        - .chapter-ref               : Inline link to main story chapter
+        - .term-tag                  : Pill-shaped related term link (href="#term-xxx")
+        - .animate-on-scroll         : Scroll-triggered fade-in
+        - .delay-1 ... .delay-4      : Stagger delay helpers
+      -->
+
+      <div class="term-card animate-on-scroll" id="term-dns">
+        <div class="term-card__header">
+          <span class="term-card__icon">📒</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">DNSサーバー</span>
+            <span class="term-card__name-en">Domain Name System</span>
+          </div>
+          <div class="term-card__oneliner">インターネットの住所録</div>
+        </div>
+        <div class="term-card__body">
+          <p>人間が覚えやすいドメイン名（例: example.com）を、コンピュータが理解できるIPアドレス（例: 93.184.216.34）に変換する仕組みです。インターネットの「電話帳」のようなもので、ブラウザでURLを入力するたびに、まずDNSサーバーに「この名前の住所を教えて」と問い合わせが行われます。もしDNSがなければ、私たちはWebサイトごとに数字の羅列を暗記しなければなりません。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch1">→ 本編 第1章で登場</a>：よし子さんがSafariで検索した瞬間、最初に働き出すのがこのDNSサーバーです
+        </div>
+        <div class="term-card__related">
+          <a href="#term-ip" class="term-tag">IPアドレス</a>
+          <a href="#term-http" class="term-tag">HTTP/HTTPS</a>
+          <a href="#term-cdn" class="term-tag">CDN</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-ip">
+        <div class="term-card__header">
+          <span class="term-card__icon">📍</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">IPアドレス</span>
+            <span class="term-card__name-en">Internet Protocol Address</span>
+          </div>
+          <div class="term-card__oneliner">世界中のコンピュータの住所</div>
+        </div>
+        <div class="term-card__body">
+          <p>インターネットに接続しているすべての機器に割り当てられる「住所番号」です。「192.168.1.1」のような4つの数字の組（IPv4）や、より長い英数字列（IPv6）で表されます。手紙を届けるのに住所が必要なように、データの送受信にはこのIPアドレスが不可欠です。DNSサーバーはドメイン名をこのIPアドレスに変換してくれます。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch1">→ 本編 第1章で登場</a>：DNSが「住所録」でドメイン名を調べた結果、見つかるのがこのIPアドレスです
+        </div>
+        <div class="term-card__related">
+          <a href="#term-dns" class="term-tag">DNSサーバー</a>
+          <a href="#term-tcp" class="term-tag">TCP</a>
+          <a href="#term-cdn" class="term-tag">CDN</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-tcp">
+        <div class="term-card__header">
+          <span class="term-card__icon">🤝</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">TCP</span>
+            <span class="term-card__name-en">Transmission Control Protocol</span>
+          </div>
+          <div class="term-card__oneliner">確実に届ける約束の握手</div>
+        </div>
+        <div class="term-card__body">
+          <p>データを確実に届けるための通信ルールです。通信を始める前に送信側と受信側が「3ウェイハンドシェイク」という3回の確認（SYN → SYN-ACK → ACK）を行い、お互いの準備ができていることを確かめます。まるで大事な荷物を預ける前に「送りますよ？」「受け取れますよ！」「じゃあ送ります！」と確認し合うようなものです。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch1">→ 本編 第1章で登場</a>：DNSで住所が分かった後、よし子さんのスマホとサーバーが「握手」して通信を開始するシーンです
+        </div>
+        <div class="term-card__related">
+          <a href="#term-ip" class="term-tag">IPアドレス</a>
+          <a href="#term-tls" class="term-tag">TLS/SSL</a>
+          <a href="#term-http" class="term-tag">HTTP/HTTPS</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-tls">
+        <div class="term-card__header">
+          <span class="term-card__icon">🔒</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">TLS/SSL</span>
+            <span class="term-card__name-en">Transport Layer Security</span>
+          </div>
+          <div class="term-card__oneliner">通信の暗号化トンネル</div>
+        </div>
+        <div class="term-card__body">
+          <p>インターネット上のデータを暗号化し、第三者に盗み見されないようにする技術です。URLが「https://」で始まるサイトはTLSで保護されています。TCPの握手の後に「TLSハンドシェイク」が行われ、暗号化の方法を取り決めます。手紙を「透明な封筒」ではなく「鍵付きの金庫」に入れて送るイメージです。SSLはTLSの旧名称です。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch1">→ 本編 第1章で登場</a>：TCPの握手に続いて、よし子さんの通信データを暗号のトンネルで包むシーンです
+        </div>
+        <div class="term-card__related">
+          <a href="#term-tcp" class="term-tag">TCP</a>
+          <a href="#term-http" class="term-tag">HTTP/HTTPS</a>
+          <a href="#term-cookie" class="term-tag">Cookie</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-http">
+        <div class="term-card__header">
+          <span class="term-card__icon">📨</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">HTTP/HTTPS</span>
+            <span class="term-card__name-en">HyperText Transfer Protocol</span>
+          </div>
+          <div class="term-card__oneliner">Webの手紙の書き方ルール</div>
+        </div>
+        <div class="term-card__body">
+          <p>ブラウザとWebサーバーの間でデータをやり取りするための「お手紙のルール」です。ブラウザが「このページを見せて」とリクエストを送り、サーバーが「はいどうぞ」とレスポンスを返す。この一往復が基本です。HTTPSはHTTPにTLS暗号化を加えた安全版で、現在ほとんどのWebサイトがHTTPSを採用しています。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch1">→ 本編 第1章で登場</a>：暗号化トンネルの中を通って、よし子さんのリクエストがサーバーに届き、HTMLが返ってくる場面です
+        </div>
+        <div class="term-card__related">
+          <a href="#term-tls" class="term-tag">TLS/SSL</a>
+          <a href="#term-dns" class="term-tag">DNSサーバー</a>
+          <a href="#term-cdn" class="term-tag">CDN</a>
+          <a href="#term-json" class="term-tag">JSON</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-cdn">
+        <div class="term-card__header">
+          <span class="term-card__icon">🏭</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">CDN</span>
+            <span class="term-card__name-en">Content Delivery Network</span>
+          </div>
+          <div class="term-card__oneliner">最寄りの配送センター</div>
+        </div>
+        <div class="term-card__body">
+          <p>世界各地にサーバーを分散配置し、ユーザーに最も近い場所からコンテンツを届ける仕組みです。東京のユーザーにはアメリカの本社サーバーではなく、東京近郊のCDNサーバーから画像や動画を配信します。コンビニの物流センターが各地にあるおかげで、商品がすぐ届くのと同じ原理です。表示速度の向上とサーバー負荷の分散を両立します。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch1">→ 本編 第1章で登場</a>：サーバーから返ってきた画像やCSSが、実は最寄りのCDN拠点から届けられていたシーンです
+        </div>
+        <div class="term-card__related">
+          <a href="#term-http" class="term-tag">HTTP/HTTPS</a>
+          <a href="#term-ip" class="term-tag">IPアドレス</a>
+          <a href="#term-rendering" class="term-tag">レンダリング</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-redirect">
+        <div class="term-card__header">
+          <span class="term-card__icon">🔀</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">リダイレクト(302)</span>
+            <span class="term-card__name-en">HTTP 302 Redirect</span>
+          </div>
+          <div class="term-card__oneliner">自動転送の道案内</div>
+        </div>
+        <div class="term-card__body">
+          <p>あるURLにアクセスしたとき、自動的に別のURLへ転送する仕組みです。HTTPステータスコード302は「一時的な移動」を意味し、広告のクリック計測でよく使われます。広告をクリックすると、まず計測用サーバーを経由してからLPに転送される――この「経由」がリダイレクトです。ユーザーには一瞬の出来事ですが、裏ではクリックの記録が刻まれています。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch3">→ 本編 第3章で登場</a>：よし子さんが広告をタップした直後、l.instagram.com を経由してLPへ飛ばされるシーンです
+        </div>
+        <div class="term-card__related">
+          <a href="#term-http" class="term-tag">HTTP/HTTPS</a>
+          <a href="#term-fbclid" class="term-tag">fbclid</a>
+          <a href="#term-utm" class="term-tag">UTMパラメータ</a>
+          <a href="#term-cookie" class="term-tag">Cookie</a>
+        </div>
+      </div>
+
+      <!-- DISTRICT-1 CONTENT END -->
+    </div>
+
+  </section>
+
+
+  <!-- ====================================================================
+       DISTRICT 2: ブラウザ広場
+       ==================================================================== -->
+  <section class="district-section" id="district-2" data-district="2">
+
+    <div class="district-header">
+      <div class="district-header__illustration">
+        <img src="images/district-2.jpeg" alt="地区2: ブラウザ広場" style="width: 100%; max-width: 640px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+      </div>
+      <div class="district-header__content">
+        <div class="district-header__number">DISTRICT 02</div>
+        <h2 class="district-header__title">ブラウザ広場</h2>
+        <p class="district-header__subtitle">
+          受け取ったデータを目に見える形に組み立てる、ブラウザの工房。<br>
+          HTML・CSS・JavaScriptが協力して、画面を描き出す場所。
+        </p>
+        <div class="district-header__term-list">
+          <a class="district-header__chip" href="#term-cookie">Cookie</a>
+          <a class="district-header__chip" href="#term-rendering">レンダリング</a>
+          <a class="district-header__chip" href="#term-api">API</a>
+          <a class="district-header__chip" href="#term-json">JSON</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="district-body container">
+      <!-- DISTRICT-2 CONTENT START -->
+      <!--
+        Available CSS classes for term content:
+        - .term-card                 : Main term card wrapper (full-width, left border accent)
+        - .term-card__header         : Card header with icon, name, oneliner
+        - .term-card__icon           : Emoji/icon in a rounded square
+        - .term-card__name           : Wrapper for ja/en name
+        - .term-card__name-ja        : Japanese term name (large, bold)
+        - .term-card__name-en        : English term name (small, monospace)
+        - .term-card__oneliner       : One-line description pill
+        - .term-card__body           : Technical explanation section (2-3 lines)
+        - .term-card__story          : "In Yoshiko's journey..." story reference
+        - .term-card__related        : Related term tag list
+        - .chapter-ref               : Inline link to main story chapter
+        - .term-tag                  : Pill-shaped related term link (href="#term-xxx")
+        - .animate-on-scroll         : Scroll-triggered fade-in
+        - .delay-1 ... .delay-4      : Stagger delay helpers
+      -->
+
+      <div class="term-card animate-on-scroll" id="term-cookie">
+        <div class="term-card__header">
+          <span class="term-card__icon">🍪</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">Cookie（1st/3rd Party）</span>
+            <span class="term-card__name-en">HTTP Cookie</span>
+          </div>
+          <div class="term-card__oneliner">ブラウザの記憶メモ</div>
+        </div>
+        <div class="term-card__body">
+          <p>Webサイトがブラウザに保存する小さなテキストデータです。「このユーザーはログイン済み」「カートにはこの商品が入っている」など、サイトがあなたのことを覚えておくための「付箋メモ」のようなもの。1st Party Cookieは訪問中のサイト自身が貼るメモ、3rd Party Cookieは別のサイト（広告配信サーバーなど）が貼るメモです。この3rd Party Cookieの扱いが、現在のプライバシー議論の中心になっています。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch3">→ 本編 第3章・第4章で登場</a>：fbclidパラメータがCookieとして保存され、第4章ではGTMやsGTMがそのCookieを読み取るシーンです
+        </div>
+        <div class="term-card__related">
+          <a href="#term-itp" class="term-tag">ITP</a>
+          <a href="#term-gtm" class="term-tag">GTM</a>
+          <a href="#term-stape-store" class="term-tag">Stape Store</a>
+          <a href="#term-cookie-keeper" class="term-tag">Cookie Keeper</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-rendering">
+        <div class="term-card__header">
+          <span class="term-card__icon">🎨</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">レンダリング</span>
+            <span class="term-card__name-en">Browser Rendering / WebKit</span>
+          </div>
+          <div class="term-card__oneliner">データを画面に描く画家</div>
+        </div>
+        <div class="term-card__body">
+          <p>サーバーから届いたHTML・CSS・JavaScriptなどのコードを解読し、私たちが目で見て操作できる「画面」に変換する工程です。ブラウザの中にいる「画家」が設計図（HTML）と装飾指示書（CSS）を受け取り、一筆一筆キャンバスに描き上げるイメージです。SafariではWebKitというエンジンがこの仕事を担当しています。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch1">→ 本編 第1章で登場</a>：CDNから届いたデータをWebKitが組み立て、よし子さんの画面にWebページが表示されるクライマックスのシーンです
+        </div>
+        <div class="term-card__related">
+          <a href="#term-http" class="term-tag">HTTP/HTTPS</a>
+          <a href="#term-cdn" class="term-tag">CDN</a>
+          <a href="#term-gtm" class="term-tag">GTM</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-api">
+        <div class="term-card__header">
+          <span class="term-card__icon">🔌</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">API</span>
+            <span class="term-card__name-en">Application Programming Interface</span>
+          </div>
+          <div class="term-card__oneliner">ソフトウェア同士の会話窓口</div>
+        </div>
+        <div class="term-card__body">
+          <p>異なるソフトウェア同士が情報をやり取りするための「窓口」です。レストランの注文カウンターに例えると、お客さん（アプリ）がメニュー（API仕様）に沿って注文し、キッチン（サーバー）が料理（データ）を返す。直接キッチンに入らなくても、決まった形式で注文すれば欲しいものが出てきます。Meta CAPIもInstagram Feed APIも、この仕組みで動いています。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch2">→ 本編 第2章で登場</a>：Instagramアプリが Feed API を通じて投稿データや広告を取得するシーンです
+        </div>
+        <div class="term-card__related">
+          <a href="#term-json" class="term-tag">JSON</a>
+          <a href="#term-capi" class="term-tag">CAPI</a>
+          <a href="#term-http" class="term-tag">HTTP/HTTPS</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-json">
+        <div class="term-card__header">
+          <span class="term-card__icon">📋</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">JSON</span>
+            <span class="term-card__name-en">JavaScript Object Notation</span>
+          </div>
+          <div class="term-card__oneliner">データの共通書式</div>
+        </div>
+        <div class="term-card__body">
+          <p>コンピュータ同士がデータを受け渡しするときに使う、軽量で読みやすい書式です。「名前: 値」のペアで情報を整理するので、人間にも比較的読みやすいのが特徴。APIのレスポンスやGTMの設定データ、GA4のイベント送信など、Webの世界では至るところで使われている「共通語」です。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch2">→ 本編 第2章・第4章で登場</a>：Feed APIのレスポンスや、sGTMからMeta CAPIへ送るコンバージョンデータがJSON形式でやり取りされます
+        </div>
+        <div class="term-card__related">
+          <a href="#term-api" class="term-tag">API</a>
+          <a href="#term-http" class="term-tag">HTTP/HTTPS</a>
+          <a href="#term-ga4" class="term-tag">GA4</a>
+          <a href="#term-capi" class="term-tag">CAPI</a>
+        </div>
+      </div>
+
+      <!-- DISTRICT-2 CONTENT END -->
+    </div>
+
+  </section>
+
+
+  <!-- ====================================================================
+       DISTRICT 3: 広告・計測工場
+       ==================================================================== -->
+  <section class="district-section" id="district-3" data-district="3">
+
+    <div class="district-header">
+      <div class="district-header__illustration">
+        <img src="images/district-3.jpeg" alt="地区3: 広告・計測工場" style="width: 100%; max-width: 640px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+      </div>
+      <div class="district-header__content">
+        <div class="district-header__number">DISTRICT 03</div>
+        <h2 class="district-header__title">広告・計測工場</h2>
+        <p class="district-header__subtitle">
+          広告配信と成果計測を支えるテクノロジーの工場群。<br>
+          タグ管理からコンバージョン計測まで、デジタル広告の裏方がここに。
+        </p>
+        <div class="district-header__term-list">
+          <a class="district-header__chip" href="#term-gtm">GTM</a>
+          <a class="district-header__chip" href="#term-sgtm">sGTM</a>
+          <a class="district-header__chip" href="#term-ga4">GA4</a>
+          <a class="district-header__chip" href="#term-capi">CAPI</a>
+          <a class="district-header__chip" href="#term-fbclid">fbclid</a>
+          <a class="district-header__chip" href="#term-utm">UTM</a>
+          <a class="district-header__chip" href="#term-rtb">RTB</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="district-body container">
+      <!-- DISTRICT-3 CONTENT START -->
+      <!--
+        Available CSS classes for term content:
+        - .term-card                 : Main term card wrapper (full-width, left border accent)
+        - .term-card__header         : Card header with icon, name, oneliner
+        - .term-card__icon           : Emoji/icon in a rounded square
+        - .term-card__name           : Wrapper for ja/en name
+        - .term-card__name-ja        : Japanese term name (large, bold)
+        - .term-card__name-en        : English term name (small, monospace)
+        - .term-card__oneliner       : One-line description pill
+        - .term-card__body           : Technical explanation section (2-3 lines)
+        - .term-card__story          : "In Yoshiko's journey..." story reference
+        - .term-card__related        : Related term tag list
+        - .chapter-ref               : Inline link to main story chapter
+        - .term-tag                  : Pill-shaped related term link (href="#term-xxx")
+        - .animate-on-scroll         : Scroll-triggered fade-in
+        - .delay-1 ... .delay-4      : Stagger delay helpers
+      -->
+
+      <div class="term-card animate-on-scroll" id="term-gtm">
+        <div class="term-card__header">
+          <span class="term-card__icon">🏷️</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">GTM（Googleタグマネージャー）</span>
+            <span class="term-card__name-en">Google Tag Manager</span>
+          </div>
+          <div class="term-card__oneliner">タグの総合管理システム</div>
+        </div>
+        <div class="term-card__body">
+          <p>Webサイトに埋め込む計測タグ（GA4、Meta Pixelなど）を、HTMLを直接編集せずに管理画面から一括管理できるツールです。「コンテナ」と呼ばれるたった1つのコードをサイトに設置すれば、あとはGTMの管理画面上でタグの追加・編集・削除が自由自在。エンジニアに毎回コード修正を依頼しなくて済む、広告運用者にとっての必須インフラです。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch4">→ 本編 第4章で登場</a>：よし子さんがFramerのLPにたどり着いた瞬間、GTMコンテナが読み込まれ複数のタグが一斉に発火するシーン
+        </div>
+        <div class="term-card__related">
+          <a href="#term-sgtm" class="term-tag">sGTM</a>
+          <a href="#term-ga4" class="term-tag">GA4</a>
+          <a href="#term-capi" class="term-tag">CAPI</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-sgtm">
+        <div class="term-card__header">
+          <span class="term-card__icon">🏭</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">sGTM（サーバーサイドGTM）</span>
+            <span class="term-card__name-en">Server-side Google Tag Manager</span>
+          </div>
+          <div class="term-card__oneliner">当社の秘密工場</div>
+        </div>
+        <div class="term-card__body">
+          <p>通常のGTMがブラウザ上で動くのに対し、sGTMはクラウドサーバー上で動くタグ管理システムです。自社ドメイン（例: sgtm.client-domain.com）で運用するため、ブラウザから見ると「1st Partyのサーバー」に見え、ITPの制限を回避できます。当社ではStapeがホスティングするGoogle Cloud Run上にデプロイし、Cookie KeeperによるCookie延命やMeta CAPIへの直接送信など、計測精度を守る要として活用しています。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch4">→ 本編 第4章で登場</a>：GTMから転送されたデータがsGTM（Stape）に届き、1st Partyドメインとしてサーバー側で処理されるシーン
+        </div>
+        <div class="term-card__related">
+          <a href="#term-gtm" class="term-tag">GTM</a>
+          <a href="#term-capi" class="term-tag">CAPI</a>
+          <a href="#term-itp" class="term-tag">ITP</a>
+          <a href="#term-cookie-keeper" class="term-tag">Cookie Keeper</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-ga4">
+        <div class="term-card__header">
+          <span class="term-card__icon">📊</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">GA4</span>
+            <span class="term-card__name-en">Google Analytics 4</span>
+          </div>
+          <div class="term-card__oneliner">Googleの統計局</div>
+        </div>
+        <div class="term-card__body">
+          <p>Googleが提供する無料のアクセス解析ツールの最新版です。従来のユニバーサルアナリティクス（UA）が「ページビュー」中心だったのに対し、GA4はすべてのユーザー行動を「イベント」として統一的に記録します。ページ閲覧、ボタンクリック、スクロール、動画再生、フォーム送信――すべてがイベントとしてGA4に届きます。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch4">→ 本編 第4章で登場</a>：GTMのGA4タグが発火し、よし子さんのページ閲覧イベントがGA4サーバーへ送信されるシーン
+        </div>
+        <div class="term-card__related">
+          <a href="#term-gtm" class="term-tag">GTM</a>
+          <a href="#term-utm" class="term-tag">UTMパラメータ</a>
+          <a href="#term-cookie" class="term-tag">Cookie</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-capi">
+        <div class="term-card__header">
+          <span class="term-card__icon">📡</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">CAPI（コンバージョンAPI）</span>
+            <span class="term-card__name-en">Meta Conversions API</span>
+          </div>
+          <div class="term-card__oneliner">サーバー間の直通電話</div>
+        </div>
+        <div class="term-card__body">
+          <p>Meta（Facebook/Instagram）広告のコンバージョンデータを、ブラウザを経由せずサーバーからMetaのサーバーへ直接送信するAPIです。従来のMeta Pixelはブラウザ上で動くため、ITPやATTの影響でデータが欠落しがちでした。CAPIならサーバー間通信なのでCookie制限の影響を受けず、SHA256でハッシュ化したメールアドレスやfbclidと組み合わせることで、高精度なCV計測を実現します。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch4">→ 本編 第4章・第5章で登場</a>：sGTMがMeta CAPIを通じてよし子さんのコンバージョンデータをMetaサーバーへ直接送信するシーン
+        </div>
+        <div class="term-card__related">
+          <a href="#term-sgtm" class="term-tag">sGTM</a>
+          <a href="#term-fbclid" class="term-tag">fbclid</a>
+          <a href="#term-sha256" class="term-tag">SHA256ハッシュ</a>
+          <a href="#term-emq" class="term-tag">EMQ</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-fbclid">
+        <div class="term-card__header">
+          <span class="term-card__icon">🏷️</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">fbclid</span>
+            <span class="term-card__name-en">Facebook Click Identifier</span>
+          </div>
+          <div class="term-card__oneliner">Metaの追跡タグ</div>
+        </div>
+        <div class="term-card__body">
+          <p>Meta広告をクリックしたとき、遷移先URLに自動的に付与される長いランダム文字列のパラメータです（例: ?fbclid=AbCdEf123...）。Metaはこの値を使って「どの広告をクリックしたユーザーがCVしたか」を紐づけます。ただしITPによりCookieの有効期限が短縮されるため、当社ではStape Storeにfbclidを保存し、CV時にデータを結合する仕組みで対策しています。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch3">→ 本編 第3章で登場</a>：よし子さんがInstagram広告をタップした瞬間、Metaのサーバーが302リダイレクトでfbclidをURLに付与するシーン
+        </div>
+        <div class="term-card__related">
+          <a href="#term-capi" class="term-tag">CAPI</a>
+          <a href="#term-redirect" class="term-tag">リダイレクト</a>
+          <a href="#term-stape-store" class="term-tag">Stape Store</a>
+          <a href="#term-itp" class="term-tag">ITP</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-utm">
+        <div class="term-card__header">
+          <span class="term-card__icon">🔖</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">UTMパラメータ</span>
+            <span class="term-card__name-en">Urchin Tracking Module</span>
+          </div>
+          <div class="term-card__oneliner">GA4用の荷札</div>
+        </div>
+        <div class="term-card__body">
+          <p>URLに付加する特別なパラメータで、GA4が「このユーザーはどこから来たか」を判別するための荷札です。utm_source（流入元）、utm_medium（媒体種別）、utm_campaign（キャンペーン名）などを設定します。たとえば「?utm_source=instagram&amp;utm_medium=cpc」なら「Instagramの有料広告から来た」とGA4が自動的に分類してくれます。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch3">→ 本編 第3章で登場</a>：fbclidと一緒にURLに付与され、よし子さんの流入元情報をGA4に伝える荷札として働くシーン
+        </div>
+        <div class="term-card__related">
+          <a href="#term-ga4" class="term-tag">GA4</a>
+          <a href="#term-fbclid" class="term-tag">fbclid</a>
+          <a href="#term-redirect" class="term-tag">リダイレクト</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-rtb">
+        <div class="term-card__header">
+          <span class="term-card__icon">⚡</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">RTB（リアルタイムビディング）</span>
+            <span class="term-card__name-en">Real-Time Bidding</span>
+          </div>
+          <div class="term-card__oneliner">0.1秒の広告オークション</div>
+        </div>
+        <div class="term-card__body">
+          <p>Webページやアプリの広告枠が表示されるたびに、わずか0.1秒の間にオークション形式で広告主が入札を競い合う仕組みです。よし子さんがInstagramを開いた瞬間、複数の広告主のシステムが「この人に広告を見せたい」と一斉に入札し、最も高い金額を提示した広告が表示されます。Meta広告もこのRTBの仕組みで配信先を決定しています。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch2">→ 本編 第2章で登場</a>：よし子さんのInstagramフィードに広告が挿入される裏側で、0.1秒のオークションが行われるシーン
+        </div>
+        <div class="term-card__related">
+          <a href="#term-api" class="term-tag">API</a>
+          <a href="#term-json" class="term-tag">JSON</a>
+          <a href="#term-cookie" class="term-tag">Cookie</a>
+        </div>
+      </div>
+
+      <!-- DISTRICT-3 CONTENT END -->
+    </div>
+
+  </section>
+
+
+  <!-- ====================================================================
+       DISTRICT 4: プライバシー砦
+       ==================================================================== -->
+  <section class="district-section" id="district-4" data-district="4">
+
+    <div class="district-header">
+      <div class="district-header__illustration">
+        <img src="images/district-4.jpeg" alt="地区4: プライバシー砦" style="width: 100%; max-width: 640px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+      </div>
+      <div class="district-header__content">
+        <div class="district-header__number">DISTRICT 04</div>
+        <h2 class="district-header__title">プライバシー砦</h2>
+        <p class="district-header__subtitle">
+          ユーザーのプライバシーを守る防壁と、その影響を受けるトラッキング技術。<br>
+          ITP、同意管理、1st Partyデータ戦略がせめぎ合う最前線。
+        </p>
+        <div class="district-header__term-list">
+          <a class="district-header__chip" href="#term-itp">ITP</a>
+          <a class="district-header__chip" href="#term-att">ATT</a>
+          <a class="district-header__chip" href="#term-sha256">SHA256</a>
+          <a class="district-header__chip" href="#term-emq">EMQ</a>
+          <a class="district-header__chip" href="#term-stape-store">Stape Store</a>
+          <a class="district-header__chip" href="#term-cookie-keeper">Cookie Keeper</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="district-body container">
+      <!-- DISTRICT-4 CONTENT START -->
+      <!--
+        Available CSS classes for term content:
+        - .term-card                 : Main term card wrapper (full-width, left border accent)
+        - .term-card__header         : Card header with icon, name, oneliner
+        - .term-card__icon           : Emoji/icon in a rounded square
+        - .term-card__name           : Wrapper for ja/en name
+        - .term-card__name-ja        : Japanese term name (large, bold)
+        - .term-card__name-en        : English term name (small, monospace)
+        - .term-card__oneliner       : One-line description pill
+        - .term-card__body           : Technical explanation section (2-3 lines)
+        - .term-card__story          : "In Yoshiko's journey..." story reference
+        - .term-card__related        : Related term tag list
+        - .chapter-ref               : Inline link to main story chapter
+        - .term-tag                  : Pill-shaped related term link (href="#term-xxx")
+        - .animate-on-scroll         : Scroll-triggered fade-in
+        - .delay-1 ... .delay-4      : Stagger delay helpers
+      -->
+
+      <div class="term-card animate-on-scroll" id="term-itp">
+        <div class="term-card__header">
+          <span class="term-card__icon">🛡️</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">ITP</span>
+            <span class="term-card__name-en">Intelligent Tracking Prevention</span>
+          </div>
+          <div class="term-card__oneliner">Safariの追跡防止シールド</div>
+        </div>
+        <div class="term-card__body">
+          <p>Apple SafariのWebKitエンジンに搭載されたトラッキング防止機能です。3rd Party Cookieの完全ブロックに加え、JavaScriptで設定した1st Party Cookieの有効期限を最大7日に制限、広告クリック由来のパラメータ（fbclidなど）が付いたCookieは24時間で失効します。日本ではiPhoneユーザーが多いため、この制限が広告計測に深刻な影響を与えており、sGTMやCAPIといった対策技術が生まれるきっかけとなりました。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch4">→ 本編 第4章で登場</a>：よし子さんのSafariブラウザでITPが働き、通常のCookieが7日で消えてしまう制約が明かされるシーン
+        </div>
+        <div class="term-card__related">
+          <a href="#term-cookie" class="term-tag">Cookie</a>
+          <a href="#term-sgtm" class="term-tag">sGTM</a>
+          <a href="#term-cookie-keeper" class="term-tag">Cookie Keeper</a>
+          <a href="#term-att" class="term-tag">ATT</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-att">
+        <div class="term-card__header">
+          <span class="term-card__icon">📱</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">ATT</span>
+            <span class="term-card__name-en">App Tracking Transparency</span>
+          </div>
+          <div class="term-card__oneliner">iOSアプリの追跡許可ポップアップ</div>
+        </div>
+        <div class="term-card__body">
+          <p>iOS 14.5以降で導入された、アプリが他社のアプリやWebサイトを横断してユーザーを追跡する前に許可を求める仕組みです。Instagramを開くと「"Instagram"が他社のAppやWebサイトを横断してあなたのアクティビティを追跡することを許可しますか？」というポップアップが出ます。多くのユーザーが「追跡しないように要求」を選ぶため、Meta広告のターゲティング精度とCV計測に大きな影響を与えました。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch4">→ 本編 第4章で登場</a>：ITPと並んで、ATTがMeta広告のデータ収集を制限する「プライバシーの壁」として紹介されるシーン
+        </div>
+        <div class="term-card__related">
+          <a href="#term-itp" class="term-tag">ITP</a>
+          <a href="#term-capi" class="term-tag">CAPI</a>
+          <a href="#term-fbclid" class="term-tag">fbclid</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-sha256">
+        <div class="term-card__header">
+          <span class="term-card__icon">🔐</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">SHA256ハッシュ</span>
+            <span class="term-card__name-en">SHA-256 Hash</span>
+          </div>
+          <div class="term-card__oneliner">個人情報の暗号変換</div>
+        </div>
+        <div class="term-card__body">
+          <p>元のデータから固定長の文字列（ハッシュ値）を生成する一方向の変換関数です。たとえばメールアドレス「yoshiko@example.com」をSHA256に通すと「a1b2c3d4...」のような64文字のランダムな文字列に変わります。重要なのは「元に戻せない」こと。Metaにハッシュ化されたメールを送れば、Meta側も同じハッシュ値と照合してユーザーを特定できますが、第三者がハッシュ値から元のメールアドレスを知ることはできません。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch5">→ 本編 第5章で登場</a>：よし子さんがフォームに入力したメールアドレスがsGTMでSHA256ハッシュ化され、安全な形でMeta CAPIに送信されるシーン
+        </div>
+        <div class="term-card__related">
+          <a href="#term-capi" class="term-tag">CAPI</a>
+          <a href="#term-emq" class="term-tag">EMQ</a>
+          <a href="#term-sgtm" class="term-tag">sGTM</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-emq">
+        <div class="term-card__header">
+          <span class="term-card__icon">💎</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">EMQ（イベントマッチクオリティ）</span>
+            <span class="term-card__name-en">Event Match Quality</span>
+          </div>
+          <div class="term-card__oneliner">MetaのCV照合スコア</div>
+        </div>
+        <div class="term-card__body">
+          <p>Meta広告マネージャーに表示される、コンバージョンデータの品質スコアです（0〜10点）。CAPIで送信するデータにemail、phone、IPアドレス、User Agent、fbclidなどのパラメータがどれだけ含まれているかで点数が決まります。スコアが高いほどMetaが「広告クリックしたユーザー」と「CVしたユーザー」を正確に紐づけられるため、広告最適化の精度が上がります。当社の目標は8.0以上です。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch5">→ 本編 第5章で登場</a>：sGTMがStape Storeのデータとハッシュ化情報を組み合わせ、EMQスコア8.5/10.0を達成するシーン
+        </div>
+        <div class="term-card__related">
+          <a href="#term-capi" class="term-tag">CAPI</a>
+          <a href="#term-sha256" class="term-tag">SHA256ハッシュ</a>
+          <a href="#term-stape-store" class="term-tag">Stape Store</a>
+          <a href="#term-fbclid" class="term-tag">fbclid</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-stape-store">
+        <div class="term-card__header">
+          <span class="term-card__icon">🗄️</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">Stape Store</span>
+            <span class="term-card__name-en">Stape Store</span>
+          </div>
+          <div class="term-card__oneliner">sGTMのデータ金庫</div>
+        </div>
+        <div class="term-card__body">
+          <p>sGTM内で使えるKey-Value型のデータストアです。広告クリック時のfbclidとユーザーを紐づけて一時保存し、後からCV（コンバージョン）が発生したときにそのデータを取り出して結合する「タイムカプセル」のような役割を果たします。ITPでCookieが短命化しても、サーバー側にデータを保存しているため影響を受けません。これにより、クリックからCVまで時間が空いても正確な計測が可能になります。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch5">→ 本編 第5章で登場</a>：よし子さんのCV時にStape Storeから過去のfbclidが呼び出され、Meta CAPIに送るデータが完成するシーン
+        </div>
+        <div class="term-card__related">
+          <a href="#term-sgtm" class="term-tag">sGTM</a>
+          <a href="#term-fbclid" class="term-tag">fbclid</a>
+          <a href="#term-capi" class="term-tag">CAPI</a>
+          <a href="#term-emq" class="term-tag">EMQ</a>
+        </div>
+      </div>
+
+      <div class="term-card animate-on-scroll" id="term-cookie-keeper">
+        <div class="term-card__header">
+          <span class="term-card__icon">🍪</span>
+          <div class="term-card__name">
+            <span class="term-card__name-ja">Cookie Keeper</span>
+            <span class="term-card__name-en">Stape Cookie Keeper</span>
+          </div>
+          <div class="term-card__oneliner">1st Party Cookieの延命装置</div>
+        </div>
+        <div class="term-card__body">
+          <p>sGTM（Stape）が提供するCookie延命機能です。通常、JavaScriptで設定したCookieはITPにより最大7日で失効しますが、Cookie KeeperはHTTPレスポンスヘッダーでCookieを設定（＝サーバーサイドCookie）するため、最大400日間有効にできます。sGTMが自社ドメインで動いていることを活かし、ブラウザには「1st Partyサーバーが設定した正規のCookie」として認識されます。</p>
+        </div>
+        <div class="term-card__story">
+          <a class="chapter-ref" href="index.html#ch4">→ 本編 第4章で登場</a>：sGTMがCookie Keeperを使い、よし子さんのブラウザに長寿命の1st Party Cookieを設定するシーン
+        </div>
+        <div class="term-card__related">
+          <a href="#term-cookie" class="term-tag">Cookie</a>
+          <a href="#term-itp" class="term-tag">ITP</a>
+          <a href="#term-sgtm" class="term-tag">sGTM</a>
+        </div>
+      </div>
+
+      <!-- DISTRICT-4 CONTENT END -->
+    </div>
+
+  </section>
+
+
+  <!-- ====================================================================
+       FOOTER
+       ==================================================================== -->
+  <footer class="production-notes">
+    <div class="production-notes__logo">1900film</div>
+    <p>新人研修教材「よし子さんの見えない旅」用語図鑑</p>
+    <div class="production-notes__links">
+      <a href="index.html">本編を読む</a>
+    </div>
+    <p style="margin-top: 0.75rem; font-size: 0.75rem;">Created with care for those just starting their journey in digital advertising.</p>
+  </footer>
+
+
+  <!-- ====================================================================
+       JAVASCRIPT
+       ==================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      // ================================================================
+      // 1. Navigation scroll-linked highlight (IntersectionObserver)
+      // ================================================================
+      const navLinks = document.querySelectorAll('.main-nav__link[href^="#"]');
+      const sections = document.querySelectorAll('.cover, .district-section, #world-map');
+      const nav = document.getElementById('mainNav');
+
+      const sectionObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.id;
+              navLinks.forEach((link) => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + id) {
+                  link.classList.add('active');
+                }
+              });
+            }
+          });
+        },
+        {
+          rootMargin: '-20% 0px -70% 0px',
+          threshold: 0,
+        }
+      );
+
+      sections.forEach((section) => {
+        sectionObserver.observe(section);
+      });
+
+      // Nav shadow on scroll
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 10) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      });
+
+
+      // ================================================================
+      // 2. .animate-on-scroll fade-in trigger (IntersectionObserver)
+      // ================================================================
+      const animElements = document.querySelectorAll('.animate-on-scroll');
+
+      const animObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              animObserver.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          rootMargin: '0px 0px -80px 0px',
+          threshold: 0.1,
+        }
+      );
+
+      animElements.forEach((el) => {
+        animObserver.observe(el);
+      });
+
+
+      // ================================================================
+      // 3. Hamburger menu toggle
+      // ================================================================
+      const hamburger = document.getElementById('hamburger');
+      const navLinksContainer = document.getElementById('navLinks');
+
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        navLinksContainer.classList.toggle('open');
+      });
+
+      // Close menu when a link is clicked (mobile)
+      navLinksContainer.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('open');
+          navLinksContainer.classList.remove('open');
+        });
+      });
+
+
+      // ================================================================
+      // 4. Smooth scroll for all internal anchor links
+      // ================================================================
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href').substring(1);
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            const navHeight = nav.offsetHeight;
+            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth',
+            });
+          }
+        });
+      });
+
+    })();
+  </script>
+
+</body>
+</html>

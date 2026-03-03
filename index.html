@@ -1,0 +1,3901 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>よし子さんの見えない旅 ― スマホの裏側で起きていること</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Noto+Serif+JP:wght@400;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ========================================================================
+       CSS DESIGN SYSTEM - よし子さんの見えない旅
+       ======================================================================== */
+
+    /* --- CSS Custom Properties (Design Tokens) --- */
+    :root {
+      /* Chapter 1: DNS/HTTP - Blue (Explorer/Adventure) */
+      --ch1-color: #3B82F6;
+      --ch1-light: #DBEAFE;
+      --ch1-dark: #1E40AF;
+      --ch1-gradient: linear-gradient(135deg, #DBEAFE 0%, rgba(219, 234, 254, 0) 80%);
+
+      /* Chapter 2: Instagram - Purple/Pink (SNS Glamour) */
+      --ch2-color: #E1306C;
+      --ch2-light: #FCE7F3;
+      --ch2-dark: #9D174D;
+      --ch2-gradient: linear-gradient(135deg, #FCE7F3 0%, rgba(252, 231, 243, 0) 80%);
+
+      /* Chapter 3: Click - Orange (Flash of Insight) */
+      --ch3-color: #F59E0B;
+      --ch3-light: #FEF3C7;
+      --ch3-dark: #B45309;
+      --ch3-gradient: linear-gradient(135deg, #FEF3C7 0%, rgba(254, 243, 199, 0) 80%);
+
+      /* Chapter 4: sGTM - Green (Our Tech Trust) */
+      --ch4-color: #10B981;
+      --ch4-light: #D1FAE5;
+      --ch4-dark: #065F46;
+      --ch4-gradient: linear-gradient(135deg, #D1FAE5 0%, rgba(209, 250, 229, 0) 80%);
+
+      /* Chapter 5: CV - Gold (Achievement/Culmination) */
+      --ch5-color: #EAB308;
+      --ch5-light: #FEF9C3;
+      --ch5-dark: #A16207;
+      --ch5-gradient: linear-gradient(135deg, #FEF9C3 0%, rgba(254, 249, 195, 0) 80%);
+
+      /* Base Colors */
+      --bg-warm-white: #FFF8F0;
+      --text-dark-navy: #1E293B;
+      --text-sub: #64748B;
+      --border-light: #E2E8F0;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
+      --shadow-hover: 0 12px 36px rgba(0, 0, 0, 0.16);
+
+      /* Request / Response */
+      --request-bg: #EFF6FF;
+      --request-border: #3B82F6;
+      --response-bg: #F0FDF4;
+      --response-border: #10B981;
+
+      /* Tech Note Variants */
+      --note-info-bg: #EFF6FF;
+      --note-info-border: #3B82F6;
+      --note-important-bg: #FFF7ED;
+      --note-important-border: #F59E0B;
+      --note-critical-bg: #FEF2F2;
+      --note-critical-border: #EF4444;
+
+      /* Typography */
+      --font-sans: 'Noto Sans JP', sans-serif;
+      --font-serif: 'Noto Serif JP', serif;
+      --font-code: 'Fira Code', monospace;
+
+      /* Spacing */
+      --container-max: 1200px;
+      --section-padding: 4rem 2rem;
+
+      /* Transitions */
+      --transition-base: 0.3s ease;
+      --transition-slow: 0.6s ease;
+    }
+
+
+    /* --- Reset & Base --- */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-dark-navy);
+      background-color: var(--bg-warm-white);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      line-height: 1.4;
+    }
+
+    h1 {
+      font-family: var(--font-sans);
+      font-weight: 900;
+      font-size: 2.5rem;
+    }
+
+    h2 {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 2rem;
+    }
+
+    h3 {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+
+    h4 {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+
+    code, pre {
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+    }
+
+    .container {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+
+    /* ========================================================================
+       NAVIGATION
+       ======================================================================== */
+    .main-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 248, 240, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
+      transition: box-shadow var(--transition-base);
+    }
+
+    .main-nav.scrolled {
+      box-shadow: var(--shadow-md);
+    }
+
+    .main-nav__inner {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .main-nav__logo {
+      font-weight: 900;
+      font-size: 1rem;
+      color: var(--text-dark-navy);
+      white-space: nowrap;
+    }
+
+    .main-nav__links {
+      display: flex;
+      gap: 0.25rem;
+      list-style: none;
+    }
+
+    .main-nav__link {
+      display: block;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      border-radius: 8px;
+      transition: all var(--transition-base);
+      white-space: nowrap;
+    }
+
+    .main-nav__link:hover {
+      color: var(--text-dark-navy);
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .main-nav__link.active {
+      color: var(--text-dark-navy);
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    /* Chapter color indicators for nav links */
+    .main-nav__link[data-chapter="1"].active { color: var(--ch1-color); }
+    .main-nav__link[data-chapter="2"].active { color: var(--ch2-color); }
+    .main-nav__link[data-chapter="3"].active { color: var(--ch3-color); }
+    .main-nav__link[data-chapter="4"].active { color: var(--ch4-color); }
+    .main-nav__link[data-chapter="5"].active { color: var(--ch5-color); }
+
+    /* Hamburger Menu */
+    .main-nav__hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .main-nav__hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text-dark-navy);
+      border-radius: 2px;
+      transition: all var(--transition-base);
+    }
+
+    .main-nav__hamburger.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .main-nav__hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .main-nav__hamburger.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+
+    /* ========================================================================
+       COVER (Title Page)
+       ======================================================================== */
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      background: linear-gradient(180deg, #FFF8F0 0%, #FDE8D0 50%, #FFF8F0 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 40%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 60%, rgba(225, 48, 108, 0.05) 0%, transparent 50%),
+                  radial-gradient(circle at 50% 80%, rgba(234, 179, 8, 0.05) 0%, transparent 50%);
+      animation: coverFloat 20s ease-in-out infinite;
+    }
+
+    @keyframes coverFloat {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-2%, -1%); }
+    }
+
+    .cover__badge {
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+      padding: 0.4rem 1.2rem;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--border-light);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .cover__title {
+      position: relative;
+      z-index: 1;
+      font-size: 3rem;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(135deg, var(--ch1-color), var(--ch2-color), var(--ch5-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cover__subtitle {
+      position: relative;
+      z-index: 1;
+      font-size: 1.2rem;
+      color: var(--text-sub);
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+    }
+
+    .cover__character {
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 24px;
+      padding: 2rem;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      margin-bottom: 2rem;
+    }
+
+    .cover__character-icon {
+      font-size: 4rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .cover__character-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .cover__character-desc {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      line-height: 1.7;
+    }
+
+    .cover__intro {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      line-height: 2;
+      color: var(--text-sub);
+    }
+
+    .cover__scroll-hint {
+      position: relative;
+      z-index: 1;
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-sub);
+      font-size: 0.8rem;
+      animation: scrollHint 2s ease-in-out infinite;
+    }
+
+    .cover__scroll-hint span {
+      display: block;
+      width: 20px;
+      height: 32px;
+      border: 2px solid var(--text-sub);
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .cover__scroll-hint span::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 6px;
+      background: var(--text-sub);
+      border-radius: 3px;
+      animation: scrollDot 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollHint {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    @keyframes scrollDot {
+      0% { top: 6px; opacity: 1; }
+      100% { top: 18px; opacity: 0; }
+    }
+
+
+    /* ========================================================================
+       CHAPTER - Base Structure
+       ======================================================================== */
+    .chapter {
+      position: relative;
+    }
+
+    .chapter-body {
+      padding: var(--section-padding);
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .chapter-header
+       ======================================================================== */
+    .chapter-header {
+      width: 100%;
+      min-height: 40vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Per-chapter gradient backgrounds */
+    [data-chapter="1"] .chapter-header { background: var(--ch1-gradient); }
+    [data-chapter="2"] .chapter-header { background: var(--ch2-gradient); }
+    [data-chapter="3"] .chapter-header { background: var(--ch3-gradient); }
+    [data-chapter="4"] .chapter-header { background: var(--ch4-gradient); }
+    [data-chapter="5"] .chapter-header { background: var(--ch5-gradient); }
+
+    .chapter-header__number {
+      display: inline-block;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    [data-chapter="1"] .chapter-header__number { color: var(--ch1-dark); border: 2px solid var(--ch1-color); }
+    [data-chapter="2"] .chapter-header__number { color: var(--ch2-dark); border: 2px solid var(--ch2-color); }
+    [data-chapter="3"] .chapter-header__number { color: var(--ch3-dark); border: 2px solid var(--ch3-color); }
+    [data-chapter="4"] .chapter-header__number { color: var(--ch4-dark); border: 2px solid var(--ch4-color); }
+    [data-chapter="5"] .chapter-header__number { color: var(--ch5-dark); border: 2px solid var(--ch5-color); }
+
+    .chapter-header__title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+    }
+
+    [data-chapter="1"] .chapter-header__title { color: var(--ch1-dark); }
+    [data-chapter="2"] .chapter-header__title { color: var(--ch2-dark); }
+    [data-chapter="3"] .chapter-header__title { color: var(--ch3-dark); }
+    [data-chapter="4"] .chapter-header__title { color: var(--ch4-dark); }
+    [data-chapter="5"] .chapter-header__title { color: var(--ch5-dark); }
+
+    .chapter-header__subtitle {
+      font-size: 1.1rem;
+      color: var(--text-sub);
+      margin-bottom: 2rem;
+      font-family: var(--font-serif);
+    }
+
+    .chapter-header__illustration {
+      max-width: 800px;
+      width: 100%;
+      min-height: 200px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.5);
+      border: 2px dashed var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      overflow: hidden;
+    }
+
+    .chapter-header__illustration img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .chapter-header__illustration:empty::after {
+      content: 'illustration placeholder';
+      opacity: 0.5;
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .scene-setting
+       ======================================================================== */
+    .scene-setting {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    [data-chapter="1"] .scene-setting { background: var(--ch1-light); }
+    [data-chapter="2"] .scene-setting { background: var(--ch2-light); }
+    [data-chapter="3"] .scene-setting { background: var(--ch3-light); }
+    [data-chapter="4"] .scene-setting { background: var(--ch4-light); }
+    [data-chapter="5"] .scene-setting { background: var(--ch5-light); }
+
+    .scene-setting__icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .scene-setting__text {
+      flex: 1;
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .server-card-grid & .server-card
+       ======================================================================== */
+    .server-card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .server-card {
+      background: #FFFFFF;
+      border-radius: 12px;
+      padding: 1.5rem;
+      border-left: 4px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-base);
+      cursor: default;
+    }
+
+    /* Chapter-specific border colors */
+    [data-chapter="1"] .server-card { border-left-color: var(--ch1-color); }
+    [data-chapter="2"] .server-card { border-left-color: var(--ch2-color); }
+    [data-chapter="3"] .server-card { border-left-color: var(--ch3-color); }
+    [data-chapter="4"] .server-card { border-left-color: var(--ch4-color); }
+    [data-chapter="5"] .server-card { border-left-color: var(--ch5-color); }
+
+    .server-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-4px);
+    }
+
+    .server-card__icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .server-card__name {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .server-card__role {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      margin-bottom: 0.5rem;
+    }
+
+    .server-card__character {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      padding: 0.2rem 0.6rem;
+      display: inline-block;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .server-card__description {
+      font-family: var(--font-serif);
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      font-style: italic;
+      line-height: 1.7;
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .flow-container & .flow-section
+       ======================================================================== */
+    .flow-container {
+      margin: 2rem 0;
+    }
+
+    .flow-section {
+      margin-bottom: 0;
+      position: relative;
+    }
+
+    .flow-section__header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    [data-chapter="1"] .flow-section__header { background: var(--ch1-light); color: var(--ch1-dark); }
+    [data-chapter="2"] .flow-section__header { background: var(--ch2-light); color: var(--ch2-dark); }
+    [data-chapter="3"] .flow-section__header { background: var(--ch3-light); color: var(--ch3-dark); }
+    [data-chapter="4"] .flow-section__header { background: var(--ch4-light); color: var(--ch4-dark); }
+    [data-chapter="5"] .flow-section__header { background: var(--ch5-light); color: var(--ch5-dark); }
+
+    .flow-section__step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 0.85rem;
+      font-weight: 900;
+      flex-shrink: 0;
+      color: #FFFFFF;
+    }
+
+    [data-chapter="1"] .flow-section__step-number { background: var(--ch1-color); }
+    [data-chapter="2"] .flow-section__step-number { background: var(--ch2-color); }
+    [data-chapter="3"] .flow-section__step-number { background: var(--ch3-color); }
+    [data-chapter="4"] .flow-section__step-number { background: var(--ch4-color); }
+    [data-chapter="5"] .flow-section__step-number { background: var(--ch5-color); }
+
+    .flow-section__content {
+      padding: 0 0 2rem;
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .split-view
+       ======================================================================== */
+    .split-view {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .split-view__phone {
+      flex: 0 0 35%;
+      max-width: 35%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .split-view__server {
+      flex: 0 0 65%;
+      max-width: 65%;
+      min-width: 0;
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .phone-mock
+       ======================================================================== */
+    .phone-mock {
+      width: 280px;
+      max-width: 100%;
+      border: 3px solid #333;
+      border-radius: 40px;
+      background: #FFFFFF;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg),
+                  inset 0 0 0 2px rgba(255, 255, 255, 0.5);
+      position: relative;
+    }
+
+    .phone-mock__notch {
+      width: 120px;
+      height: 28px;
+      background: #333;
+      margin: 0 auto;
+      border-radius: 0 0 18px 18px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .phone-mock__notch::after {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 8px;
+      background: #555;
+      border-radius: 50%;
+    }
+
+    .phone-mock__screen {
+      padding: 1rem;
+      min-height: 200px;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      background: #FAFAFA;
+    }
+
+    .phone-mock__screen img {
+      border-radius: 4px;
+    }
+
+    .phone-mock__home-bar {
+      width: 120px;
+      height: 4px;
+      background: #333;
+      margin: 8px auto 12px;
+      border-radius: 4px;
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .request-block
+       ======================================================================== */
+    .request-block {
+      background: var(--request-bg);
+      border-left: 3px solid var(--request-border);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .request-block__label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--ch1-dark);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .request-block__label::before {
+      content: '\2709\FE0F';
+      font-size: 1rem;
+    }
+
+    .request-block__code {
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .request-block__code pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .request-block__code code {
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      color: var(--text-dark-navy);
+    }
+
+    .request-block__annotation {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      margin-top: 0.5rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--border-light);
+      font-family: var(--font-serif);
+      line-height: 1.7;
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .response-block
+       ======================================================================== */
+    .response-block {
+      background: var(--response-bg);
+      border-left: 3px solid var(--response-border);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .response-block__label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--ch4-dark);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .response-block__label::before {
+      content: '\1F4E6';
+      font-size: 1rem;
+    }
+
+    .response-block__code {
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      overflow-x: auto;
+    }
+
+    .response-block__code pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .response-block__code code {
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      color: var(--text-dark-navy);
+    }
+
+    .response-block__annotation {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      margin-top: 0.5rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--border-light);
+      font-family: var(--font-serif);
+      line-height: 1.7;
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .flow-arrow
+       ======================================================================== */
+    .flow-arrow {
+      display: flex;
+      justify-content: center;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+
+    .flow-arrow__line {
+      width: 0;
+      height: 40px;
+      border-left: 2px dashed #94A3B8;
+      position: relative;
+    }
+
+    .flow-arrow__line::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: -5px;
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 8px solid #94A3B8;
+    }
+
+    .flow-arrow--animated .flow-arrow__line::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -3px;
+      width: 6px;
+      height: 6px;
+      background: var(--ch1-color);
+      border-radius: 50%;
+      animation: dotFlow 1.5s ease-in-out infinite;
+    }
+
+    [data-chapter="2"] .flow-arrow--animated .flow-arrow__line::before { background: var(--ch2-color); }
+    [data-chapter="3"] .flow-arrow--animated .flow-arrow__line::before { background: var(--ch3-color); }
+    [data-chapter="4"] .flow-arrow--animated .flow-arrow__line::before { background: var(--ch4-color); }
+    [data-chapter="5"] .flow-arrow--animated .flow-arrow__line::before { background: var(--ch5-color); }
+
+    @keyframes dotFlow {
+      0% { top: 0; opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { top: calc(100% - 6px); opacity: 0; }
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .server-icon-inline
+       ======================================================================== */
+    .server-icon-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.15rem 0.6rem;
+      background: rgba(0, 0, 0, 0.04);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .server-icon-inline__emoji {
+      font-size: 1.1rem;
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .tech-note
+       ======================================================================== */
+    .tech-note {
+      border-radius: 10px;
+      margin: 1.5rem 0;
+      overflow: hidden;
+    }
+
+    .tech-note summary {
+      padding: 0.75rem 1.25rem;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      list-style: none;
+      user-select: none;
+      transition: background var(--transition-base);
+    }
+
+    .tech-note summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .tech-note summary::after {
+      content: '\25B6';
+      font-size: 0.7rem;
+      margin-left: auto;
+      transition: transform var(--transition-base);
+    }
+
+    .tech-note[open] summary::after {
+      transform: rotate(90deg);
+    }
+
+    .tech-note__body {
+      padding: 0.75rem 1.25rem 1rem;
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+
+    /* Info variant */
+    .tech-note--info {
+      background: var(--note-info-bg);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .tech-note--info summary {
+      color: var(--ch1-dark);
+    }
+
+    .tech-note--info summary::before {
+      content: '\1F4A1';
+      font-size: 1.1rem;
+    }
+
+    /* Important variant */
+    .tech-note--important {
+      background: var(--note-important-bg);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    .tech-note--important summary {
+      color: var(--ch3-dark);
+    }
+
+    .tech-note--important summary::before {
+      content: '\2605';
+      font-size: 1.1rem;
+    }
+
+    /* Critical variant */
+    .tech-note--critical {
+      background: var(--note-critical-bg);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .tech-note--critical summary {
+      color: #991B1B;
+    }
+
+    .tech-note--critical summary::before {
+      content: '\1F511';
+      font-size: 1.1rem;
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .story-narration
+       ======================================================================== */
+    .story-narration {
+      background: #FDF6E3;
+      border-radius: 16px;
+      padding: 2rem 2.5rem;
+      margin: 2.5rem 0;
+      position: relative;
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      line-height: 2;
+      color: var(--text-dark-navy);
+    }
+
+    .story-narration::before {
+      content: '\1F4D6';
+      position: absolute;
+      top: -16px;
+      left: 24px;
+      font-size: 2rem;
+      background: var(--bg-warm-white);
+      padding: 0 0.5rem;
+      border-radius: 8px;
+    }
+
+    .story-narration blockquote {
+      margin: 0;
+      padding-left: 1.5rem;
+      border-left: 3px solid var(--border-light);
+    }
+
+    /* Chapter-specific narration borders */
+    [data-chapter="1"] .story-narration blockquote { border-left-color: var(--ch1-color); }
+    [data-chapter="2"] .story-narration blockquote { border-left-color: var(--ch2-color); }
+    [data-chapter="3"] .story-narration blockquote { border-left-color: var(--ch3-color); }
+    [data-chapter="4"] .story-narration blockquote { border-left-color: var(--ch4-color); }
+    [data-chapter="5"] .story-narration blockquote { border-left-color: var(--ch5-color); }
+
+
+    /* ========================================================================
+       COMPONENT: .json-display
+       ======================================================================== */
+    .json-display {
+      background: #1E293B;
+      border-radius: 10px;
+      padding: 1.25rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+
+    .json-display__header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .json-display__dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .json-display__dot--red { background: #EF4444; }
+    .json-display__dot--yellow { background: #F59E0B; }
+    .json-display__dot--green { background: #10B981; }
+
+    .json-display__title {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.75rem;
+      font-family: var(--font-code);
+    }
+
+    .json-display pre {
+      margin: 0;
+      counter-reset: line;
+    }
+
+    .json-display code {
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #E2E8F0;
+    }
+
+    /* Syntax highlighting classes */
+    .json-display .json-key { color: #93C5FD; }
+    .json-display .json-string { color: #86EFAC; }
+    .json-display .json-number { color: #FDBA74; }
+    .json-display .json-boolean { color: #C4B5FD; }
+    .json-display .json-null { color: #FDA4AF; }
+    .json-display .json-bracket { color: #94A3B8; }
+    .json-display .json-line {
+      display: block;
+      padding-left: 3rem;
+      position: relative;
+    }
+    .json-display .json-line::before {
+      counter-increment: line;
+      content: counter(line);
+      position: absolute;
+      left: 0;
+      width: 2rem;
+      text-align: right;
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 0.75rem;
+      user-select: none;
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .chapter-transition
+       ======================================================================== */
+    .chapter-transition {
+      text-align: center;
+      padding: 3rem 2rem;
+      position: relative;
+    }
+
+    .chapter-transition__arrow {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 0.75rem;
+      animation: transitionBounce 2s ease-in-out infinite;
+    }
+
+    @keyframes transitionBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    .chapter-transition__text {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      color: var(--text-sub);
+    }
+
+    .chapter-transition__divider {
+      width: 80px;
+      height: 2px;
+      background: var(--border-light);
+      margin: 1.5rem auto 0;
+    }
+
+
+    /* ========================================================================
+       COMPONENT: .architecture-diagram
+       ======================================================================== */
+    .architecture-diagram {
+      display: grid;
+      gap: 1.5rem;
+      margin: 2rem 0;
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .arch-layer {
+      border-radius: 12px;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .arch-layer__title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .arch-layer--network {
+      background: var(--ch1-light);
+    }
+    .arch-layer--network .arch-layer__title { color: var(--ch1-dark); }
+
+    .arch-layer--application {
+      background: var(--ch4-light);
+    }
+    .arch-layer--application .arch-layer__title { color: var(--ch4-dark); }
+
+    .arch-layer--data {
+      background: var(--ch5-light);
+    }
+    .arch-layer--data .arch-layer__title { color: var(--ch5-dark); }
+
+    .arch-layer__nodes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .arch-node {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      padding: 0.75rem 1.25rem;
+      text-align: center;
+      min-width: 120px;
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-base);
+    }
+
+    .arch-node:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .arch-node__icon {
+      font-size: 1.5rem;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .arch-node__name {
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .arch-connection {
+      display: flex;
+      justify-content: center;
+      padding: 0.25rem 0;
+    }
+
+    .arch-connection__line {
+      width: 0;
+      height: 24px;
+      border-left: 2px dashed #94A3B8;
+      position: relative;
+    }
+
+    .arch-connection__line::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: -4px;
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 6px solid #94A3B8;
+    }
+
+
+    /* ========================================================================
+       ANIMATIONS
+       ======================================================================== */
+    @keyframes flowPulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Scroll-triggered animation */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger delay helpers */
+    .animate-on-scroll.delay-1 { transition-delay: 0.1s; }
+    .animate-on-scroll.delay-2 { transition-delay: 0.2s; }
+    .animate-on-scroll.delay-3 { transition-delay: 0.3s; }
+    .animate-on-scroll.delay-4 { transition-delay: 0.4s; }
+
+
+    /* ========================================================================
+       FOOTER
+       ======================================================================== */
+    .production-notes {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--text-dark-navy);
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.85rem;
+    }
+
+    .production-notes a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: underline;
+    }
+
+    .production-notes__logo {
+      font-weight: 900;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 0.5rem;
+    }
+
+
+    /* ========================================================================
+       UTILITY: Placeholder for content-pending sections
+       ======================================================================== */
+    .placeholder {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-sub);
+      font-style: italic;
+      border: 2px dashed var(--border-light);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+
+    /* ========================================================================
+       RESPONSIVE: 768px and below
+       ======================================================================== */
+    @media (max-width: 768px) {
+      html {
+        font-size: 15px;
+      }
+
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.6rem; }
+      h3 { font-size: 1.3rem; }
+
+      .cover {
+        padding: 5rem 1.5rem 3rem;
+      }
+
+      .cover__title {
+        font-size: 2rem;
+      }
+
+      .cover__subtitle {
+        font-size: 1rem;
+      }
+
+      /* Navigation: hamburger mode */
+      .main-nav__hamburger {
+        display: flex;
+      }
+
+      .main-nav__links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: rgba(255, 248, 240, 0.98);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border-light);
+        padding: 0.5rem;
+        box-shadow: var(--shadow-md);
+      }
+
+      .main-nav__links.open {
+        display: flex;
+      }
+
+      .main-nav__link {
+        padding: 0.75rem 1rem;
+      }
+
+      /* Chapter header */
+      .chapter-header {
+        min-height: 30vh;
+        padding: 3rem 1.5rem;
+      }
+
+      .chapter-header__title {
+        font-size: 1.8rem;
+      }
+
+      /* Split view: stack vertically */
+      .split-view {
+        flex-direction: column;
+      }
+
+      .split-view__phone {
+        flex: none;
+        max-width: 100%;
+        justify-content: center;
+      }
+
+      .split-view__server {
+        flex: none;
+        max-width: 100%;
+      }
+
+      /* Phone mock: center */
+      .phone-mock {
+        margin: 0 auto;
+      }
+
+      /* Server card grid: 1 column */
+      .server-card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* Container padding */
+      .container {
+        padding: 0 1.25rem;
+      }
+
+      .chapter-body {
+        padding: 2.5rem 1.25rem;
+      }
+
+      /* Story narration */
+      .story-narration {
+        padding: 1.5rem 1.5rem;
+      }
+
+      /* Architecture diagram */
+      .arch-layer__nodes {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .arch-node {
+        min-width: 160px;
+      }
+    }
+
+    /* Medium screens: 769px - 1024px */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .server-card-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====================================================================
+       NAVIGATION
+       ==================================================================== -->
+  <nav class="main-nav" id="mainNav">
+    <div class="main-nav__inner">
+      <div class="main-nav__logo">よし子さんの見えない旅</div>
+      <button class="main-nav__hamburger" id="hamburger" aria-label="メニュー">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="main-nav__links" id="navLinks">
+        <li><a href="#cover" class="main-nav__link" data-chapter="cover">はじまり</a></li>
+        <li><a href="#ch1" class="main-nav__link" data-chapter="1">第1章</a></li>
+        <li><a href="#ch2" class="main-nav__link" data-chapter="2">第2章</a></li>
+        <li><a href="#ch3" class="main-nav__link" data-chapter="3">第3章</a></li>
+        <li><a href="#ch4" class="main-nav__link" data-chapter="4">第4章</a></li>
+        <li><a href="#ch5" class="main-nav__link" data-chapter="5">第5章</a></li>
+        <li><a href="#epilogue" class="main-nav__link" data-chapter="epilogue">エピローグ</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <!-- ====================================================================
+       COVER (Title Page)
+       ==================================================================== -->
+  <header class="cover" id="cover">
+    <div class="cover__badge">1900film 新人研修教材</div>
+    <h1 class="cover__title">よし子さんの見えない旅</h1>
+    <p class="cover__subtitle">― スマホの裏側で起きていること ―</p>
+
+    <div class="cover__character">
+      <div class="cover__character-icon">👩‍💼</div>
+      <div class="cover__character-name">田中よし子さん（54歳）</div>
+      <p class="cover__character-desc">
+        埼玉県在住。スマホでInstagramを見るのが日課。<br>
+        最近気になっているルテインサプリのサイトを<br>
+        何気なくタップしたその瞬間から、<br>
+        見えない旅が始まります。
+      </p>
+    </div>
+
+    <p class="cover__intro">
+      よし子さんがスマホの画面をタップするたび、<br>
+      目には見えない「手紙」が世界中を駆け巡っています。<br>
+      この物語は、そんな見えない旅路を<br>
+      絵本のようにたどるお話です。
+    </p>
+
+    <div style="margin: 2rem auto; max-width: 800px;">
+      <img src="images/cover-illustration.jpeg" alt="よし子さんの見えない旅 カバーイラスト" style="width: 100%; max-width: 800px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+    </div>
+
+    <div class="cover__scroll-hint">
+      <span></span>
+      スクロールして冒険を始める
+    </div>
+  </header>
+
+
+
+
+  <!-- ====================================================================
+       CHAPTER 1: DNS/HTTP - 画面が光るまでの大冒険
+       ==================================================================== -->
+  <section id="ch1" class="chapter" data-chapter="1">
+    <!-- CH1 CONTENT START -->
+    <div class="chapter-header">
+      <span class="chapter-header__number">第１章</span>
+      <h2 class="chapter-header__title">画面が光るまでの大冒険</h2>
+      <p class="chapter-header__subtitle">― スマホにサイトが表示されるまで ―</p>
+      <div class="chapter-header__illustration"><img src="images/chapter1-illustration.jpeg" alt="第1章イラスト" style="width: 100%; max-width: 800px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);"></div>
+    </div>
+    <div class="chapter-body container">
+
+      <!-- 場面設定 -->
+      <div class="scene-setting animate-on-scroll">
+        <span class="scene-setting__icon">📍</span>
+        <div class="scene-setting__text">
+          <strong>日曜日の午前10時。</strong><br>
+          よし子さんがSafariを開いて「介護美容 資格」と検索バーに入力する。
+        </div>
+      </div>
+
+      <!-- 登場サーバーキャラクター -->
+      <h3 class="animate-on-scroll" style="margin-bottom: 1.5rem;">登場するサーバーたち</h3>
+      <div class="server-card-grid animate-on-scroll">
+        <div class="server-card">
+          <span class="server-card__icon">📒</span>
+          <div class="server-card__name">DNSサーバー</div>
+          <div class="server-card__role">ドメイン名 → IPアドレス変換</div>
+          <div class="server-card__character">「住所録のおじいさん」</div>
+          <p class="server-card__description">巨大な電話帳を抱えた番人。「google.com？ それは142.250.196.110番地じゃよ」</p>
+        </div>
+        <div class="server-card">
+          <span class="server-card__icon">🏭</span>
+          <div class="server-card__name">CDNサーバー（Cloudflare等）</div>
+          <div class="server-card__role">コンテンツの近距離配信</div>
+          <div class="server-card__character">「最寄りの倉庫番」</div>
+          <p class="server-card__description">世界中に支店を持つ配送センター。東京のよし子さんには東京支店から届ける。</p>
+        </div>
+        <div class="server-card">
+          <span class="server-card__icon">📦</span>
+          <div class="server-card__name">Webサーバー（Nginx/Apache）</div>
+          <div class="server-card__role">HTMLファイルの提供</div>
+          <div class="server-card__character">「荷造り職人」</div>
+          <p class="server-card__description">リクエストに合わせてHTMLという「設計図」を箱詰めする職人。</p>
+        </div>
+        <div class="server-card">
+          <span class="server-card__icon">🧑‍🍳</span>
+          <div class="server-card__name">アプリケーションサーバー</div>
+          <div class="server-card__role">動的処理（検索結果生成等）</div>
+          <div class="server-card__character">「料理人」</div>
+          <p class="server-card__description">注文（検索ワード）を受けてオーダーメイドのページを調理する。</p>
+        </div>
+        <div class="server-card">
+          <span class="server-card__icon">🏛️</span>
+          <div class="server-card__name">データベースサーバー</div>
+          <div class="server-card__role">データの保管・検索</div>
+          <div class="server-card__character">「巨大図書館の司書」</div>
+          <p class="server-card__description">数十億のWebページ情報を管理し、料理人に材料を渡す。</p>
+        </div>
+      </div>
+
+      <!-- フロー: 7ステップ -->
+      <h3 class="animate-on-scroll" style="margin-bottom: 1.5rem;">検索ボタンを押してから画面が表示されるまで</h3>
+      <div class="flow-container">
+
+        <!-- Step 1: DNS解決 -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">1</span>
+            DNS解決（住所を調べる）
+          </div>
+          <div class="flow-section__content">
+            <div class="split-view">
+              <div class="split-view__phone">
+                <div class="phone-mock">
+                  <div class="phone-mock__notch"></div>
+                  <div class="phone-mock__screen">
+                    <div style="background: #F2F2F7; padding: 0.5rem; border-radius: 8px; margin-bottom: 0.5rem;">
+                      <div style="font-size: 0.7rem; color: #999; text-align: center;">google.com</div>
+                    </div>
+                    <div style="background: #fff; padding: 0.5rem; border-radius: 8px; border: 2px solid #3B82F6;">
+                      <span style="font-size: 0.75rem;">🔍 介護美容 資格</span>
+                    </div>
+                    <div style="text-align: center; margin-top: 1.5rem; color: #999; font-size: 0.75rem;">
+                      <span style="font-size: 1.5rem;">📒</span><br>
+                      住所を調べています...
+                    </div>
+                  </div>
+                  <div class="phone-mock__home-bar"></div>
+                </div>
+              </div>
+              <div class="split-view__server">
+                <p>よし子のiPhone（Safari）が
+                  <span class="server-icon-inline"><span class="server-icon-inline__emoji">📒</span>DNSリゾルバ</span>
+                  に尋ねます。</p>
+                <p style="margin: 0.75rem 0;"><strong>「google.com の住所を教えて？」</strong>（UDP通信・ポート53）</p>
+                <p>問い合わせ先はキャリアのDNS、または 8.8.8.8（Google Public DNS）。</p>
+                <p style="margin-top: 0.75rem;">キャッシュになければ、順番に聞いていきます:</p>
+                <p style="margin: 0.5rem 0; padding-left: 1rem;">
+                  ルートDNS → <code>.com</code> DNS → <code>google.com</code> DNS
+                </p>
+                <p style="margin-top: 0.75rem;">そして答えが返ってきます:</p>
+                <p><strong>「142.250.196.110 だよ」</strong>（IPアドレスを返却）</p>
+
+                <details class="tech-note tech-note--info">
+                  <summary>DNSの階層構造について</summary>
+                  <div class="tech-note__body">
+                    DNSはツリー構造になっており、ルートDNS（.）→ トップレベルドメインDNS（.com）→ 権威DNSサーバー（google.com）と順番に問い合わせが行われます。一度解決したアドレスはキャッシュされるため、2回目以降はほぼ一瞬で解決されます。
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- Step 2: TCP接続 -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">2</span>
+            TCP接続（道をつなぐ）
+          </div>
+          <div class="flow-section__content">
+            <p style="margin-bottom: 1rem;">住所がわかったので、次はサーバーと「道」をつなぎます。この接続には3回のやりとりが必要です。</p>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem; padding: 1rem; background: #fff; border-radius: 10px; border: 1px solid var(--border-light);">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span style="background: var(--ch1-color); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0;">1</span>
+                <span><strong>SYN →</strong> 「つながっていいですか？」</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span style="background: var(--ch1-color); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0;">2</span>
+                <span><strong>← SYN-ACK</strong> 「いいですよ、こちらもいいですか？」</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span style="background: var(--ch1-color); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0;">3</span>
+                <span><strong>ACK →</strong> 「いいですよ！」</span>
+              </div>
+            </div>
+
+            <details class="tech-note tech-note--info">
+              <summary>3ウェイハンドシェイクとは</summary>
+              <div class="tech-note__body">
+                この3回のやりとりを<strong>「3ウェイハンドシェイク」</strong>と呼びます。絵本では「3回おじぎ」のイメージです。お互いに「準備OK」と確認し合ってから、はじめてデータのやりとりが始まります。
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- Step 3: TLS暗号化 -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">3</span>
+            TLS暗号化（秘密の約束）
+          </div>
+          <div class="flow-section__content">
+            <p style="margin-bottom: 1rem;"><strong>「https:// だから暗号化しましょう」</strong></p>
+
+            <div style="display: flex; flex-direction: column; gap: 0.75rem; padding: 1rem; background: #fff; border-radius: 10px; border: 1px solid var(--border-light);">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span style="background: var(--ch1-color); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0;">1</span>
+                <span><strong>ClientHello →</strong> 「暗号方式のメニューです」</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span style="background: var(--ch1-color); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0;">2</span>
+                <span><strong>← ServerHello + 証明書</strong> 「この方式でいきましょう。身分証です」</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span style="background: var(--ch1-color); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0;">3</span>
+                <span><strong>鍵交換 →</strong> 共通の秘密鍵を生成</span>
+              </div>
+            </div>
+
+            <p style="margin-top: 1rem;">以降の通信はすべて<strong>暗号化されたトンネル</strong>の中を通ります。</p>
+
+            <details class="tech-note tech-note--important">
+              <summary>TLSを絵本で言うと</summary>
+              <div class="tech-note__body">
+                TLSハンドシェイクは、<strong>「二人だけの秘密の言葉を決める儀式」</strong>です。この儀式が終わると、以後のやりとりは第三者に読まれない秘密の手紙になります。URLバーの鍵マーク🔒は、この暗号化トンネルが有効であることを示しています。
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- Step 4: HTTPリクエスト -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">4</span>
+            HTTPリクエスト（注文を出す）
+          </div>
+          <div class="flow-section__content">
+            <p style="margin-bottom: 1rem;">暗号化トンネルが完成しました。いよいよ「注文書」を送ります。</p>
+            <div class="request-block">
+              <div class="request-block__label">→ リクエスト</div>
+              <div class="request-block__code">
+                <pre><code>GET /search?q=介護美容+資格 HTTP/2
+Host: www.google.com
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Safari/605.1.15
+Accept: text/html
+Accept-Language: ja-JP
+Accept-Encoding: gzip, br
+Cookie: NID=xxx; 1P_JAR=xxx</code></pre>
+              </div>
+              <div class="request-block__annotation">
+                <strong>GET /search?q=介護美容+資格 HTTP/2</strong> ← リクエストライン（何を注文するか）<br>
+                <strong>Host</strong> ← どのお店に？<br>
+                <strong>User-Agent</strong> ← 「私はiPhoneのSafariです」という自己紹介<br>
+                <strong>Accept</strong> ← 「HTMLで返してね」<br>
+                <strong>Accept-Language</strong> ← 「日本語でお願い」<br>
+                <strong>Accept-Encoding</strong> ← 「圧縮してくれてもOK」<br>
+                <strong>Cookie</strong> ← 以前の来店メモ
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- Step 5: サーバー側の処理 -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">5</span>
+            サーバー側の処理（料理の準備）
+          </div>
+          <div class="flow-section__content">
+            <p style="margin-bottom: 1rem;">注文書がGoogleに届きました。ここからはサーバー側のリレーです。</p>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+              <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.75rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                <span class="server-icon-inline"><span class="server-icon-inline__emoji">📦</span>Googleフロントエンド</span>
+                <span>→ リクエストを受け取り、内部に転送</span>
+              </div>
+              <div class="flow-arrow"><div class="flow-arrow__line" style="height: 20px;"></div></div>
+              <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.75rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                <span class="server-icon-inline"><span class="server-icon-inline__emoji">🧑‍🍳</span>アプリケーションサーバー</span>
+                <span>→ 「介護美容 資格」で検索インデックスを照会</span>
+              </div>
+              <div class="flow-arrow"><div class="flow-arrow__line" style="height: 20px;"></div></div>
+              <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.75rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                <span class="server-icon-inline"><span class="server-icon-inline__emoji">🏛️</span>データベースクラスタ</span>
+                <span>→ 何十億ものページから関連度の高い結果を返す</span>
+              </div>
+              <div class="flow-arrow"><div class="flow-arrow__line" style="height: 20px;"></div></div>
+              <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.75rem 1rem; background: var(--ch1-light); border-radius: 8px; border: 1px solid var(--ch1-color);">
+                <span>✨ 検索結果ページのHTMLを組み立てる</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- Step 6: HTTPレスポンス -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">6</span>
+            HTTPレスポンス（届け物が届く）
+          </div>
+          <div class="flow-section__content">
+            <p style="margin-bottom: 1rem;">サーバーから「届け物」が返ってきます。</p>
+            <div class="response-block">
+              <div class="response-block__label">← レスポンス</div>
+              <div class="response-block__code">
+                <pre><code>HTTP/2 200 OK
+Content-Type: text/html; charset=UTF-8
+Content-Encoding: br
+Content-Length: 182,453
+Set-Cookie: NID=xxx; Secure; HttpOnly
+Cache-Control: private, max-age=0
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;title&gt;介護美容 資格 - Google 検索&lt;/title&gt;
+  &lt;link rel="stylesheet" href="..."&gt;
+  &lt;script src="..."&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  ... 検索結果10件 ...
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+              </div>
+              <div class="response-block__annotation">
+                <strong>200 OK</strong> ← 「注文承りました、こちらです」<br>
+                <strong>Content-Type: text/html</strong> ← 「HTMLの設計図です」<br>
+                <strong>Content-Encoding: br</strong> ← 「Brotliで圧縮してあります」<br>
+                <strong>Content-Length: 182,453</strong> ← 「約180KBです」<br>
+                <strong>Set-Cookie</strong> ← 「次回用のメモを預けます」<br>
+                <strong>Cache-Control: private, max-age=0</strong> ← 「この内容は保存しないでね」<br>
+                <strong>&lt;link&gt;, &lt;script&gt;</strong> ← ここから追加のCSS・JS注文が発生
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- Step 7: レンダリング -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">7</span>
+            レンダリング（設計図を形にする）
+          </div>
+          <div class="flow-section__content">
+            <div class="split-view">
+              <div class="split-view__phone">
+                <div class="phone-mock">
+                  <div class="phone-mock__notch"></div>
+                  <div class="phone-mock__screen">
+                    <div style="font-size: 0.65rem; color: #1A73E8; margin-bottom: 0.25rem;">Google</div>
+                    <div style="background: #fff; padding: 0.3rem 0.5rem; border-radius: 16px; border: 1px solid #ddd; font-size: 0.65rem; margin-bottom: 0.5rem;">
+                      🔍 介護美容 資格
+                    </div>
+                    <div style="border-bottom: 1px solid #eee; padding-bottom: 0.4rem; margin-bottom: 0.4rem;">
+                      <div style="font-size: 0.55rem; color: #999;">www.example1.com</div>
+                      <div style="font-size: 0.7rem; color: #1A0DAB; font-weight: 700;">介護美容の資格取得なら...</div>
+                      <div style="font-size: 0.55rem; color: #545454;">介護美容研究所は全国で唯一...</div>
+                    </div>
+                    <div style="border-bottom: 1px solid #eee; padding-bottom: 0.4rem; margin-bottom: 0.4rem;">
+                      <div style="font-size: 0.55rem; color: #999;">www.example2.com</div>
+                      <div style="font-size: 0.7rem; color: #1A0DAB; font-weight: 700;">ケアビューティスト資格...</div>
+                      <div style="font-size: 0.55rem; color: #545454;">訪問美容の専門資格を取得...</div>
+                    </div>
+                    <div style="border-bottom: 1px solid #eee; padding-bottom: 0.4rem;">
+                      <div style="font-size: 0.55rem; color: #999;">www.example3.com</div>
+                      <div style="font-size: 0.7rem; color: #1A0DAB; font-weight: 700;">福祉美容師になるには...</div>
+                      <div style="font-size: 0.55rem; color: #545454;">需要が高まる福祉美容師...</div>
+                    </div>
+                  </div>
+                  <div class="phone-mock__home-bar"></div>
+                </div>
+              </div>
+              <div class="split-view__server">
+                <p style="margin-bottom: 0.75rem;"><strong>Safari（ブラウザエンジン: WebKit）</strong>が設計図を形にしていきます。</p>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                  <div style="padding: 0.6rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                    <strong>① HTML解析 → DOMツリー構築</strong><br>
+                    <span style="font-size: 0.9rem; color: var(--text-sub);">「骨組み」を作る</span>
+                  </div>
+                  <div style="padding: 0.6rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                    <strong>② CSS解析 → CSSOMツリー構築</strong><br>
+                    <span style="font-size: 0.9rem; color: var(--text-sub);">「どこに何色を塗るか」の設計図</span>
+                  </div>
+                  <div style="padding: 0.6rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                    <strong>③ DOM + CSSOM → レンダーツリー</strong><br>
+                    <span style="font-size: 0.9rem; color: var(--text-sub);">「実際に画面に出すもの」の完成図</span>
+                  </div>
+                  <div style="padding: 0.6rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                    <strong>④ レイアウト計算</strong><br>
+                    <span style="font-size: 0.9rem; color: var(--text-sub);">iPhone 15の画面幅（393px）に合わせて配置計算</span>
+                  </div>
+                  <div style="padding: 0.6rem 1rem; background: var(--ch1-light); border-radius: 8px; border: 1px solid var(--ch1-color);">
+                    <strong>⑤ ペイント → コンポジット → 画面表示</strong><br>
+                    <span style="font-size: 0.9rem;">✨ よし子さんの目の前に検索結果が表示される！</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.flow-container -->
+
+      <!-- 章末の語り -->
+      <div class="story-narration animate-on-scroll">
+        <blockquote>
+          よし子さんが「検索」ボタンを押してから画面が表示されるまで、わずか0.3秒。でもその0.3秒の間に、手紙は海を越え、暗号を交わし、巨大な図書館を駆け巡り、美しく整えられた「答え」として、よし子さんのスマホに届いたのです。
+        </blockquote>
+      </div>
+
+    </div><!-- /.chapter-body.container -->
+    <!-- CH1 CONTENT END -->
+  </section>
+
+  <!-- Chapter Transition: 1 → 2 -->
+  <div class="chapter-transition">
+    <span class="chapter-transition__arrow">&#8595;</span>
+    <p class="chapter-transition__text">Webページが表示されました。<br>次は、よし子さんがいつも見ているInstagramの世界へ。</p>
+    <div class="chapter-transition__divider"></div>
+  </div>
+
+
+  <!-- ====================================================================
+       CHAPTER 2: Instagram - SNSの世界で何が起きているか
+       ==================================================================== -->
+  <section id="ch2" class="chapter" data-chapter="2">
+    <!-- CH2 CONTENT START -->
+    <div class="chapter-header">
+      <span class="chapter-header__number">第２章</span>
+      <h2 class="chapter-header__title">流れる写真の川を泳ぐ</h2>
+      <p class="chapter-header__subtitle">― Instagramのフィードをスクロールするとき ―</p>
+      <div class="chapter-header__illustration"><img src="images/chapter2-illustration.jpeg" alt="第2章イラスト" style="width: 100%; max-width: 800px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);"></div>
+    </div>
+    <div class="chapter-body container">
+
+      <!-- 場面設定 -->
+      <div class="scene-setting animate-on-scroll">
+        <span class="scene-setting__icon">📍</span>
+        <div class="scene-setting__text">
+          よし子さんがInstagramアプリを開き、フィード面をスクロールしている。
+        </div>
+      </div>
+
+      <details class="tech-note tech-note--info animate-on-scroll">
+        <summary>Instagramアプリの内部構造について</summary>
+        <div class="tech-note__body">
+          Instagramアプリ内部には<strong>WKWebView</strong>（SafariのエンジンWebKitベースの埋め込みブラウザ）が組み込まれており、Web表示時はSafari同等の動作をします。フィードのAPI通信はアプリ内のHTTPSクライアントが行います。
+        </div>
+      </details>
+
+      <!-- 新サーバーキャラクター -->
+      <h3 class="animate-on-scroll" style="margin-bottom: 1.5rem;">この章で登場するサーバーたち</h3>
+      <div class="server-card-grid animate-on-scroll">
+        <div class="server-card">
+          <span class="server-card__icon">🎪</span>
+          <div class="server-card__name">Meta APIサーバー</div>
+          <div class="server-card__role">フィードデータの生成</div>
+          <div class="server-card__character">「フィード劇場の演出家」</div>
+          <p class="server-card__description">よし子さんの好みに合わせて、投稿の並び順を決めるプログラムディレクター。</p>
+        </div>
+        <div class="server-card">
+          <span class="server-card__icon">🖼️</span>
+          <div class="server-card__name">Meta CDN（Instagram）</div>
+          <div class="server-card__role">画像・動画の配信</div>
+          <div class="server-card__character">「額縁の配達人」</div>
+          <p class="server-card__description">美しい写真や動画を、一番近い倉庫から素早く届ける配達人。</p>
+        </div>
+        <div class="server-card">
+          <span class="server-card__icon">🎯</span>
+          <div class="server-card__name">Meta広告配信サーバー</div>
+          <div class="server-card__role">広告の選定・挿入</div>
+          <div class="server-card__character">「的当て名人」</div>
+          <p class="server-card__description">何百万もの広告の中から、よし子さんにぴったりの1枠を瞬時に選ぶ名人。</p>
+        </div>
+        <div class="server-card">
+          <span class="server-card__icon">🔮</span>
+          <div class="server-card__name">Meta機械学習サーバー</div>
+          <div class="server-card__role">ユーザーの興味関心を推定</div>
+          <div class="server-card__character">「心を読む占い師」</div>
+          <p class="server-card__description">過去の行動から「次に何を見たいか」を予測するAI占い師。</p>
+        </div>
+      </div>
+
+      <!-- フロー: フィードを開いた瞬間 -->
+      <h3 class="animate-on-scroll" style="margin-bottom: 1.5rem;">フィードを開いた瞬間</h3>
+      <div class="flow-container">
+
+        <!-- フィードリクエスト -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">1</span>
+            フィードのリクエスト
+          </div>
+          <div class="flow-section__content">
+            <p style="margin-bottom: 1rem;">よし子さんがInstagramアプリを開いた瞬間、以下のリクエストが送られます。</p>
+            <div class="request-block">
+              <div class="request-block__label">→ リクエスト</div>
+              <div class="request-block__code">
+                <pre><code>POST /api/v1/feed/timeline/
+Headers:
+  Authorization: Bearer {よし子のアクセストークン}
+  X-IG-App-ID: 936619743392459
+  Content-Type: application/x-www-form-urlencoded
+Body:
+  feed_view_info=...
+  phone_id={デバイスID}
+  reason=cold_start_fetch</code></pre>
+              </div>
+              <div class="request-block__annotation">
+                <strong>Authorization</strong> ← よし子さんのログイン証明書<br>
+                <strong>X-IG-App-ID</strong> ← Instagramアプリの識別番号<br>
+                <strong>reason=cold_start_fetch</strong> ← 「アプリを開いた直後の最初の読み込み」
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- Meta APIサーバーのプロフィール確認 -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">2</span>
+            よし子さんのプロフィール確認
+          </div>
+          <div class="flow-section__content">
+            <p style="margin-bottom: 1rem;">
+              <span class="server-icon-inline"><span class="server-icon-inline__emoji">🎪</span>Meta APIサーバー</span>（i.instagram.com）が、よし子さんのプロフィールを確認します。
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem; background: #fff; border-radius: 10px; border: 1px solid var(--border-light);">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.2rem;">👥</span>
+                <span><strong>フォロー中:</strong> 128人</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.2rem;">❤️</span>
+                <span><strong>過去の「いいね」:</strong> 健康・美容・介護系に偏り</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.2rem;">⏱️</span>
+                <span><strong>直近の滞在時間:</strong> 美容動画に長く滞在</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- 機械学習サーバーのスコアリング -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">3</span>
+            コンテンツのスコアリング
+          </div>
+          <div class="flow-section__content">
+            <p style="margin-bottom: 1rem;">
+              <span class="server-icon-inline"><span class="server-icon-inline__emoji">🔮</span>機械学習サーバー</span>（ランキングエンジン）が「よし子さんに見せるべきコンテンツ」をスコアリングします。
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+              <div style="padding: 0.6rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                フォロー中の投稿をランク付け
+              </div>
+              <div style="padding: 0.6rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                おすすめ投稿を混ぜる
+              </div>
+              <div style="padding: 0.6rem 1rem; background: var(--ch2-light); border-radius: 8px; border: 1px solid var(--ch2-color); font-weight: 700;">
+                ★ 広告スロットを計算（4〜5投稿ごとに1枠）
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- 広告配信サーバーのオークション -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">4</span>
+            広告オークション
+          </div>
+          <div class="flow-section__content">
+            <p style="margin-bottom: 1rem;">
+              <span class="server-icon-inline"><span class="server-icon-inline__emoji">🎯</span>広告配信サーバー</span>
+              がよし子さんのプロフィールにマッチする広告を選定します。
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem; background: #fff; border-radius: 10px; border: 1px solid var(--border-light);">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.2rem;">🎯</span>
+                <span><strong>ターゲティング条件:</strong> 45-65歳 / 女性 / 介護・美容に興味</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.2rem;">💰</span>
+                <span><strong>入札オークション実行</strong>（RTB: リアルタイムビッディング）</span>
+              </div>
+            </div>
+            <div style="margin-top: 1rem; padding: 1rem; background: var(--ch2-light); border-radius: 10px; border: 1px solid var(--ch2-color);">
+              <p style="font-weight: 700;">★ ミライプロジェクトの動画広告が落札！</p>
+              <p style="font-size: 0.9rem; color: var(--text-sub); margin-top: 0.25rem;">（広告主が当社経由でMeta広告を配信中）</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- レスポンス -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">5</span>
+            フィードデータが届く
+          </div>
+          <div class="flow-section__content">
+            <p style="margin-bottom: 1rem;">フィード内容がJSON形式で返ってきます。</p>
+            <div class="json-display">
+              <div class="json-display__header">
+                <span class="json-display__dot json-display__dot--red"></span>
+                <span class="json-display__dot json-display__dot--yellow"></span>
+                <span class="json-display__dot json-display__dot--green"></span>
+                <span class="json-display__title">feed_timeline_response.json</span>
+              </div>
+              <pre><code><span class="json-line"><span class="json-bracket">{</span></span>
+<span class="json-line">  <span class="json-key">"items"</span>: <span class="json-bracket">[</span></span>
+<span class="json-line">    <span class="json-bracket">{</span></span>
+<span class="json-line">      <span class="json-key">"media_type"</span>: <span class="json-number">1</span>,                    <span style="color: #94A3B8;">← 写真投稿</span></span>
+<span class="json-line">      <span class="json-key">"user"</span>: <span class="json-bracket">{</span><span class="json-key">"username"</span>: <span class="json-string">"friend_a"</span><span class="json-bracket">}</span>,</span>
+<span class="json-line">      <span class="json-key">"image_versions2"</span>: <span class="json-bracket">{</span></span>
+<span class="json-line">        <span class="json-key">"candidates"</span>: <span class="json-bracket">[</span></span>
+<span class="json-line">          <span class="json-bracket">{</span><span class="json-key">"url"</span>: <span class="json-string">"https://scontent-nrt1-1.cdninstagram.com/..."</span>,</span>
+<span class="json-line">           <span class="json-key">"width"</span>: <span class="json-number">1080</span>, <span class="json-key">"height"</span>: <span class="json-number">1080</span><span class="json-bracket">}</span></span>
+<span class="json-line">        <span class="json-bracket">]</span></span>
+<span class="json-line">      <span class="json-bracket">}</span></span>
+<span class="json-line">    <span class="json-bracket">}</span>,</span>
+<span class="json-line">    <span style="color: #94A3B8;">... 3投稿 ...</span></span>
+<span class="json-line" style="background: rgba(225, 48, 108, 0.15); border-radius: 4px;">    <span class="json-bracket">{</span></span>
+<span class="json-line" style="background: rgba(225, 48, 108, 0.15);">      <span class="json-key">"media_type"</span>: <span class="json-number">2</span>,                    <span style="color: #E1306C; font-weight: 700;">← ★動画広告</span></span>
+<span class="json-line" style="background: rgba(225, 48, 108, 0.15);">      <span class="json-key">"ad_id"</span>: <span class="json-string">"120211..."</span>,               <span style="color: #E1306C; font-weight: 700;">← Meta広告ID</span></span>
+<span class="json-line" style="background: rgba(225, 48, 108, 0.15);">      <span class="json-key">"ad_action"</span>: <span class="json-string">"LEARN_MORE"</span>,</span>
+<span class="json-line" style="background: rgba(225, 48, 108, 0.15);">      <span class="json-key">"link"</span>: <span class="json-string">"https://mirai-project...?utm_source=ig&amp;utm_medium=paid&amp;utm_campaign=kaigo_beauty_2026"</span>,</span>
+<span class="json-line" style="background: rgba(225, 48, 108, 0.15);">      <span class="json-key">"video_versions"</span>: <span class="json-bracket">[{</span><span class="json-key">"url"</span>: <span class="json-string">"https://scontent-...mp4"</span><span class="json-bracket">}]</span></span>
+<span class="json-line" style="background: rgba(225, 48, 108, 0.15); border-radius: 4px;">    <span class="json-bracket">}</span></span>
+<span class="json-line">  <span class="json-bracket">]</span>,</span>
+<span class="json-line">  <span class="json-key">"next_max_id"</span>: <span class="json-string">"xxx"</span>                    <span style="color: #94A3B8;">← 次のページ用カーソル</span></span>
+<span class="json-line"><span class="json-bracket">}</span></span></code></pre>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.flow-container -->
+
+      <!-- スクロールするたびに起きること -->
+      <h3 class="animate-on-scroll" style="margin-bottom: 1.5rem;">スクロールするたびに起きること</h3>
+      <div class="animate-on-scroll">
+        <div class="split-view">
+          <div class="split-view__phone">
+            <div class="phone-mock">
+              <div class="phone-mock__notch"></div>
+              <div class="phone-mock__screen">
+                <div style="background: #fafafa; font-size: 0.65rem;">
+                  <div style="display: flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0; border-bottom: 1px solid #eee;">
+                    <span style="font-size: 0.9rem;">📷</span>
+                    <span style="font-weight: 700; font-size: 0.7rem;">Instagram</span>
+                  </div>
+                  <div style="padding: 0.3rem 0; border-bottom: 1px solid #eee;">
+                    <div style="display: flex; align-items: center; gap: 0.3rem; margin-bottom: 0.2rem;">
+                      <div style="width: 18px; height: 18px; background: #ddd; border-radius: 50%;"></div>
+                      <span style="font-weight: 700; font-size: 0.6rem;">friend_a</span>
+                    </div>
+                    <div style="background: #e0e0e0; height: 60px; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #999;">📷</div>
+                    <div style="font-size: 0.55rem; margin-top: 0.2rem;">❤️ 🗨️ ✈️</div>
+                  </div>
+                  <div style="padding: 0.3rem 0; border-bottom: 1px solid #eee;">
+                    <div style="display: flex; align-items: center; gap: 0.3rem; margin-bottom: 0.2rem;">
+                      <div style="width: 18px; height: 18px; background: #E1306C; border-radius: 50%;"></div>
+                      <span style="font-weight: 700; font-size: 0.6rem;">広告</span>
+                      <span style="font-size: 0.5rem; color: #999; margin-left: auto;">広告</span>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #E1306C22, #833AB422); height: 60px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: var(--ch2-dark);">🎬 ミライプロジェクト</div>
+                    <div style="font-size: 0.5rem; margin-top: 0.2rem; background: var(--ch2-light); padding: 0.15rem 0.3rem; border-radius: 4px; text-align: center; font-weight: 700; color: var(--ch2-dark);">詳しくはこちら</div>
+                  </div>
+                </div>
+              </div>
+              <div class="phone-mock__home-bar"></div>
+            </div>
+          </div>
+          <div class="split-view__server">
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+              <div style="padding: 1rem; background: #fff; border-radius: 10px; border: 1px solid var(--border-light);">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                  <span style="background: var(--ch2-color); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; flex-shrink: 0;">1</span>
+                  <strong>画像の読み込み</strong>
+                </div>
+                <p style="font-size: 0.9rem; color: var(--text-sub);">
+                  新しい投稿の画像URLへリクエスト →
+                  <span class="server-icon-inline"><span class="server-icon-inline__emoji">🖼️</span>CDN</span>
+                  から画像バイナリがレスポンス（JPEG/WebP）
+                </p>
+              </div>
+              <div style="padding: 1rem; background: #fff; border-radius: 10px; border: 1px solid var(--border-light);">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                  <span style="background: var(--ch2-color); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; flex-shrink: 0;">2</span>
+                  <strong>プリフェッチ（先読み）</strong>
+                </div>
+                <p style="font-size: 0.9rem; color: var(--text-sub);">
+                  画面下端に近づくと、次の投稿群を先読みリクエスト（<code>next_max_id</code> 使用）。スクロールが止まらないのはこの仕組みのおかげ。
+                </p>
+              </div>
+              <div style="padding: 1rem; background: var(--ch2-light); border-radius: 10px; border: 1px solid var(--ch2-color);">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                  <span style="background: var(--ch2-color); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; flex-shrink: 0;">3</span>
+                  <strong>広告インプレッション計測</strong>
+                </div>
+                <p style="font-size: 0.9rem;">
+                  広告がビューポートに入った瞬間<br>
+                  <code style="font-size: 0.8rem;">POST /api/v1/ads/log_impression/</code><br>
+                  <strong>★ これがMeta広告マネージャーの「インプレッション」数に加算される</strong>
+                </p>
+              </div>
+            </div>
+
+            <details class="tech-note tech-note--important" style="margin-top: 1rem;">
+              <summary>広告インプレッションの定義</summary>
+              <div class="tech-note__body">
+                Meta広告では、広告がユーザーの画面（ビューポート）に表示された瞬間にインプレッションとしてカウントされます。スクロールして通り過ぎるだけでも1インプレッション。この計測データが広告マネージャーのレポートに反映されます。
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <!-- 章末の語り -->
+      <div class="story-narration animate-on-scroll">
+        <blockquote>
+          よし子さんが何気なくフィードをスクロールしているとき、裏側では「占い師」がよし子さんの好みを読み、「的当て名人」がぴったりの広告を選び、「額縁の配達人」が美しい写真を次々と届けていました。そして4つ目の投稿のあとに、ある動画広告がそっと差し込まれたのです。
+        </blockquote>
+      </div>
+
+    </div><!-- /.chapter-body.container -->
+    <!-- CH2 CONTENT END -->
+  </section>
+
+  <!-- Chapter Transition: 2 → 3 -->
+  <div class="chapter-transition">
+    <span class="chapter-transition__arrow">&#8595;</span>
+    <p class="chapter-transition__text">フィードに流れてきた広告が、よし子さんの目に留まりました。<br>さあ、指が広告に触れる瞬間です。</p>
+    <div class="chapter-transition__divider"></div>
+  </div>
+
+
+  <!-- ====================================================================
+       CHAPTER 3: クリック - その一瞬で何が起きるか
+       ==================================================================== -->
+  <section id="ch3" class="chapter" data-chapter="3">
+    <!-- CH3 CONTENT START -->
+    <div class="chapter-header">
+      <span class="chapter-header__number">第３章</span>
+      <h2 class="chapter-header__title">クリックした瞬間、何かが始まる</h2>
+      <p class="chapter-header__subtitle">― ミライプロジェクトの介護美容・動画広告をクリック ―</p>
+      <div class="chapter-header__illustration"><img src="images/chapter3-illustration.jpeg" alt="第3章イラスト" style="width: 100%; max-width: 800px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);"></div>
+    </div>
+    <div class="chapter-body container">
+
+      <!-- 場面設定 -->
+      <div class="scene-setting animate-on-scroll">
+        <span class="scene-setting__icon">👆</span>
+        <div class="scene-setting__text">
+          よし子さんがフィードに現れた<strong>「ミライプロジェクト」の介護美容の動画広告</strong>に目を留める。30秒の動画を見終わり、<strong>「詳しくはこちら」</strong>ボタンをタップした瞬間。
+        </div>
+      </div>
+
+      <!-- 登場サーバーキャラクター -->
+      <h3 class="animate-on-scroll" style="margin-bottom: 1.5rem;">この章で登場するサーバーたち</h3>
+      <div class="server-card-grid animate-on-scroll">
+        <div class="server-card">
+          <span class="server-card__icon">📮</span>
+          <div class="server-card__name">Meta広告トラッキングサーバー</div>
+          <div class="server-card__role">クリック計測・リダイレクト</div>
+          <div class="server-card__character">「仕分け郵便局」</div>
+          <p class="server-card__description">全ての広告クリックにスタンプを押し、「誰が・いつ・どの広告をクリックしたか」を記録する。</p>
+        </div>
+        <div class="server-card">
+          <span class="server-card__icon">🚦</span>
+          <div class="server-card__name">Metaリンクシムサーバー（lm3.facebook.com）</div>
+          <div class="server-card__role">リダイレクト＆パラメータ付与</div>
+          <div class="server-card__character">「交通整理のおまわりさん」</div>
+          <p class="server-card__description">クリックされた手紙に「追跡番号（fbclid）」のシールを貼り、正しい行き先に転送する。</p>
+        </div>
+        <div class="server-card">
+          <span class="server-card__icon">🪟</span>
+          <div class="server-card__name">Safari（SFSafariViewController）</div>
+          <div class="server-card__role">Web表示エンジン</div>
+          <div class="server-card__character">「窓を開ける係」</div>
+          <p class="server-card__description">Instagramアプリの中でWebページを表示するための「窓」を開く。アプリ内ブラウザとも呼ばれる。</p>
+        </div>
+      </div>
+
+      <!-- フロー -->
+      <h3 class="animate-on-scroll" style="margin-bottom: 0.75rem;">「詳しくはこちら」をタップした瞬間</h3>
+      <p class="animate-on-scroll" style="margin-bottom: 1.5rem; color: var(--text-sub);">この1タップで、<strong>3段階のリダイレクト</strong>が連鎖的に発生します。</p>
+      <div class="flow-container">
+
+        <!-- STEP 1: Metaの広告クリック記録 -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">1</span>
+            Metaの広告クリック記録
+          </div>
+          <div class="flow-section__content">
+            <div class="split-view">
+              <div class="split-view__phone">
+                <div class="phone-mock">
+                  <div class="phone-mock__notch"></div>
+                  <div class="phone-mock__screen">
+                    <div style="background: linear-gradient(135deg, #833AB4, #E1306C, #F77737); padding: 0.3rem 0.5rem; border-radius: 6px; margin-bottom: 0.5rem;">
+                      <span style="font-size: 0.6rem; color: #fff; font-weight: 700;">Instagram</span>
+                    </div>
+                    <div style="background: #f0f0f0; border-radius: 6px; padding: 0.5rem; text-align: center; margin-bottom: 0.4rem;">
+                      <span style="font-size: 1.5rem;">🎬</span><br>
+                      <span style="font-size: 0.6rem; color: #666;">介護美容 動画広告</span>
+                    </div>
+                    <div style="background: #E1306C; color: #fff; text-align: center; padding: 0.4rem; border-radius: 6px; font-size: 0.65rem; font-weight: 700; cursor: pointer; animation: flowPulse 2s ease-in-out infinite;">
+                      👆 詳しくはこちら
+                    </div>
+                    <div style="text-align: center; margin-top: 0.5rem; font-size: 0.55rem; color: #999;">
+                      タップ！
+                    </div>
+                  </div>
+                  <div class="phone-mock__home-bar"></div>
+                </div>
+              </div>
+              <div class="split-view__server">
+                <p>よし子さんの指が「詳しくはこちら」に触れた瞬間、<strong>Instagramアプリが内部でクリックイベントを検知</strong>します。</p>
+                <div class="request-block" style="margin-top: 1rem;">
+                  <div class="request-block__label">→ クリック記録リクエスト</div>
+                  <div class="request-block__code">
+                    <pre><code>POST https://www.facebook.com/ads/log_click/
+Body:
+  ad_id=120211xxxxx
+  campaign_id=23854xxxxx
+  placement=instagram_feed
+  action_type=link_click</code></pre>
+                  </div>
+                  <div class="request-block__annotation">
+                    → <span class="server-icon-inline"><span class="server-icon-inline__emoji">📮</span>仕分け郵便局</span> へ送信
+                  </div>
+                </div>
+                <p style="margin-top: 0.75rem;">ここで記録されるのが <strong>Meta広告マネージャーの「リンクのクリック」指標</strong>です。</p>
+                <div class="response-block" style="margin-top: 0.75rem;">
+                  <div class="response-block__label">← レスポンス</div>
+                  <div class="response-block__code">
+                    <pre><code>200 OK（記録完了）</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- STEP 2: リダイレクトの連鎖 -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">2</span>
+            リダイレクト（転送）の連鎖
+          </div>
+          <div class="flow-section__content">
+            <p style="margin-bottom: 1rem;">Instagramアプリがアプリ内ブラウザ（<span class="server-icon-inline"><span class="server-icon-inline__emoji">🪟</span>SFSafariViewController</span>）を起動します。</p>
+            <div class="request-block">
+              <div class="request-block__label">→ リダイレクトリクエスト</div>
+              <div class="request-block__code">
+                <pre><code>GET https://l.instagram.com/...
+  ?u=https%3A%2F%2Fmirai-project.framer.website
+      %2Fkaigo-beauty
+  &amp;e=ATxxxxxx（暗号化されたクリック情報）</code></pre>
+              </div>
+              <div class="request-block__annotation">
+                → <span class="server-icon-inline"><span class="server-icon-inline__emoji">🚦</span>交通整理のおまわりさん</span>（l.instagram.com → lm3.facebook.com）へ送信
+              </div>
+            </div>
+            <div class="response-block">
+              <div class="response-block__label">← レスポンス</div>
+              <div class="response-block__code">
+                <pre><code>HTTP/2 302 Found
+Location: https://mirai-project.framer.website
+  /kaigo-beauty
+  ?fbclid=IwAR3xxxxxxxxxxxxxx</code></pre>
+              </div>
+              <div class="response-block__annotation">
+                <strong>302 Found</strong> = 「こちらに移動してください」という転送指示<br>
+                <strong>fbclid</strong> = Metaが付与する追跡パラメータ（後で詳しく解説）
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- STEP 3: 最終遷移先へ -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">3</span>
+            最終遷移先へ
+          </div>
+          <div class="flow-section__content">
+            <p style="margin-bottom: 1rem;">アプリ内ブラウザ（Safari WebKit）が302リダイレクトに従い、<strong>自動で次のリクエストを送信</strong>します。</p>
+            <div class="request-block">
+              <div class="request-block__label">→ 最終リクエスト</div>
+              <div class="request-block__code">
+                <pre><code>GET https://mirai-project.framer.website
+  /kaigo-beauty
+  ?fbclid=IwAR3xxxxxxxxxxxxxx
+  &amp;utm_source=ig
+  &amp;utm_medium=paid
+  &amp;utm_campaign=kaigo_beauty_2026</code></pre>
+              </div>
+              <div class="request-block__annotation">
+                → Framerのサーバーへ（次章で詳しく解説）
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.flow-container -->
+
+      <!-- 技術キーポイント: fbclid -->
+      <details class="tech-note tech-note--critical animate-on-scroll">
+        <summary>fbclidの正体と役割</summary>
+        <div class="tech-note__body">
+          <div class="json-display" style="margin-bottom: 1rem;">
+            <div class="json-display__header">
+              <span class="json-display__dot json-display__dot--red"></span>
+              <span class="json-display__dot json-display__dot--yellow"></span>
+              <span class="json-display__dot json-display__dot--green"></span>
+              <span class="json-display__title">fbclid パラメータ</span>
+            </div>
+            <pre><code><span class="json-line"><span class="json-key">fbclid</span>=<span class="json-string">IwAR3xxxxxxxxxxxxxx</span></span></code></pre>
+          </div>
+          <p>これは <strong>Meta が全ての広告クリックに自動付与する識別子</strong>です。</p>
+          <p style="margin-top: 0.75rem;"><strong>fbclidの3つの役割:</strong></p>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+            <div style="padding: 0.6rem 1rem; background: rgba(255,255,255,0.7); border-radius: 8px; border: 1px solid var(--border-light);">
+              <strong>1. ブラウザ側:</strong> Meta Pixel が fbclid を読み取り、<code>_fbc</code> Cookieに保存
+            </div>
+            <div style="padding: 0.6rem 1rem; background: rgba(255,255,255,0.7); border-radius: 8px; border: 1px solid var(--border-light);">
+              <strong>2. サーバー側:</strong> sGTM経由で Meta CAPI が fbclid を <code>fbc</code> パラメータとして送信
+            </div>
+            <div style="padding: 0.6rem 1rem; background: rgba(255,255,255,0.7); border-radius: 8px; border: 1px solid var(--border-light);">
+              <strong>3. Meta側:</strong> 「広告クリック」と「その後の行動（CV等）」を紐付け
+            </div>
+          </div>
+          <div style="margin-top: 1rem; padding: 1rem; background: rgba(239, 68, 68, 0.08); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.2);">
+            <p><strong>当社の計測基盤では:</strong></p>
+            <p style="margin-top: 0.5rem;">Web GTM → GA4タグ → sGTM（Stape） → Meta CAPIタグ → <code>fbc</code> パラメータに fbclid を含めてMetaサーバーへ直接送信</p>
+            <p style="margin-top: 0.5rem;">これにより <strong>iOS 14.5+ の Cookie制限を迂回</strong>し、正確なコンバージョン計測を実現しています。</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- 技術キーポイント: UTMパラメータ -->
+      <details class="tech-note tech-note--info animate-on-scroll">
+        <summary>UTMパラメータとは</summary>
+        <div class="tech-note__body">
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <div style="padding: 0.5rem 1rem; background: rgba(255,255,255,0.7); border-radius: 8px; border: 1px solid var(--border-light);">
+              <code>utm_source=ig</code> → 流入元: <strong>Instagram</strong>
+            </div>
+            <div style="padding: 0.5rem 1rem; background: rgba(255,255,255,0.7); border-radius: 8px; border: 1px solid var(--border-light);">
+              <code>utm_medium=paid</code> → 種別: <strong>有料広告</strong>
+            </div>
+            <div style="padding: 0.5rem 1rem; background: rgba(255,255,255,0.7); border-radius: 8px; border: 1px solid var(--border-light);">
+              <code>utm_campaign=kaigo_beauty_2026</code> → キャンペーン名
+            </div>
+          </div>
+          <p style="margin-top: 0.75rem;">→ GA4 で<strong>「どの広告から来たか」</strong>を分析するための情報です。</p>
+        </div>
+      </details>
+
+      <!-- 章末の語り -->
+      <div class="story-narration animate-on-scroll">
+        <blockquote>
+          よし子さんが「詳しくはこちら」をタップした瞬間、「仕分け郵便局」がクリックのスタンプを押し、「交通整理のおまわりさん」が行き先を教え、手紙には「fbclid」という追跡番号のシールが貼られました。この小さなシールが、後にとても大切な役割を果たすことになります。
+        </blockquote>
+      </div>
+
+    </div><!-- /.chapter-body.container -->
+    <!-- CH3 CONTENT END -->
+  </section>
+
+  <!-- Chapter Transition: 3 → 4 -->
+  <div class="chapter-transition">
+    <span class="chapter-transition__arrow">&#8595;</span>
+    <p class="chapter-transition__text">LPが表示されました。でも裏側の仕事はここからが本番。<br>データ計測の要、sGTMの出番です。</p>
+    <div class="chapter-transition__divider"></div>
+  </div>
+
+
+  <!-- ====================================================================
+       CHAPTER 4: sGTM - データの守護者たち
+       ==================================================================== -->
+  <section id="ch4" class="chapter" data-chapter="4">
+    <!-- CH4 CONTENT START -->
+    <div class="chapter-header">
+      <span class="chapter-header__number">第４章</span>
+      <h2 class="chapter-header__title">新しいお店のドアを開ける</h2>
+      <p class="chapter-header__subtitle">― Framerサイト（当社制作）の読み込みから計測開始まで ―</p>
+      <div class="chapter-header__illustration"><img src="images/chapter4-illustration.jpeg" alt="第4章イラスト" style="width: 100%; max-width: 800px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);"></div>
+    </div>
+    <div class="chapter-body container">
+
+      <!-- 場面設定 -->
+      <div class="scene-setting animate-on-scroll">
+        <span class="scene-setting__icon">🏪</span>
+        <div class="scene-setting__text">
+          リダイレクトを経て、よし子さんのアプリ内ブラウザに当社がFramerで制作した<strong>「ミライプロジェクト介護美容」のランディングページ</strong>が読み込まれ始める。
+        </div>
+      </div>
+
+      <!-- 登場サーバーキャラクター -->
+      <h3 class="animate-on-scroll" style="margin-bottom: 1.5rem;">この章で登場するサーバーたち</h3>
+      <div class="server-card-grid animate-on-scroll">
+        <div class="server-card">
+          <span class="server-card__icon">🏗️</span>
+          <div class="server-card__name">Framer CDN（Vercel/Cloudflare）</div>
+          <div class="server-card__role">Framerサイトの静的ファイル配信</div>
+          <div class="server-card__character">「モダンな設計事務所」</div>
+          <p class="server-card__description">最新のデザインツールで作られた美しいページを、世界中のエッジサーバーから瞬時に届ける。</p>
+        </div>
+        <div class="server-card">
+          <span class="server-card__icon">📋</span>
+          <div class="server-card__name">Google Tag Manager CDN</div>
+          <div class="server-card__role">GTMコンテナJSの配信</div>
+          <div class="server-card__character">「監視カメラ設置業者」</div>
+          <p class="server-card__description">当社が設定した全てのタグ・トリガー・変数の定義を、JavaScriptファイルとして配信する。</p>
+        </div>
+        <div class="server-card">
+          <span class="server-card__icon">🏭</span>
+          <div class="server-card__name">当社sGTMサーバー（Stape）</div>
+          <div class="server-card__role">サーバーサイド計測処理</div>
+          <div class="server-card__character">「当社の秘密工場（sst.ドメイン.com）」</div>
+          <p class="server-card__description">ブラウザから受け取ったデータを加工し、各プラットフォームへ正確に届ける中枢。</p>
+        </div>
+        <div class="server-card">
+          <span class="server-card__icon">📊</span>
+          <div class="server-card__name">GA4サーバー（Google）</div>
+          <div class="server-card__role">アクセスデータ収集</div>
+          <div class="server-card__character">「Google統計局」</div>
+          <p class="server-card__description">全世界のWebサイトのアクセスデータを集め、分析可能にする統計局。</p>
+        </div>
+        <div class="server-card">
+          <span class="server-card__icon">📡</span>
+          <div class="server-card__name">Meta広告サーバー</div>
+          <div class="server-card__role">Pixel / CAPI受信</div>
+          <div class="server-card__character">「Metaの受信アンテナ」</div>
+          <p class="server-card__description">ブラウザ（Pixel）やサーバー（CAPI）から送られてくるイベントデータを受信する。</p>
+        </div>
+        <div class="server-card">
+          <span class="server-card__icon">💎</span>
+          <div class="server-card__name">Stape Storeサーバー</div>
+          <div class="server-card__role">ユーザーデータの蓄積・エンリッチ</div>
+          <div class="server-card__character">「データの宝石磨き職人」</div>
+          <p class="server-card__description">ユーザーの行動データを蓄積し、磨き上げて、後のコンバージョン計測で輝かせる。</p>
+        </div>
+      </div>
+
+      <!-- 5フェーズのフロー -->
+      <h3 class="animate-on-scroll" style="margin-bottom: 1.5rem;">ページが表示されるまでの5つのフェーズ</h3>
+      <div class="flow-container">
+
+        <!-- PHASE 1: Framerサイトの読み込み -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">1</span>
+            Framerサイトの読み込み
+          </div>
+          <div class="flow-section__content">
+            <div class="split-view">
+              <div class="split-view__phone">
+                <div class="phone-mock">
+                  <div class="phone-mock__notch"></div>
+                  <div class="phone-mock__screen">
+                    <div style="background: #f5f5f5; padding: 0.3rem 0.5rem; border-radius: 4px; margin-bottom: 0.5rem;">
+                      <span style="font-size: 0.5rem; color: #999;">🔒 mirai-project.framer.website</span>
+                    </div>
+                    <div style="text-align: center; padding: 1rem 0;">
+                      <div style="font-size: 0.8rem; font-weight: 700; margin-bottom: 0.3rem;">ミライプロジェクト</div>
+                      <div style="font-size: 0.6rem; color: #666; margin-bottom: 0.5rem;">介護美容で、新しいキャリアを。</div>
+                      <div style="width: 80%; margin: 0 auto; height: 3px; background: linear-gradient(90deg, var(--ch4-color) 60%, #eee 60%); border-radius: 2px;"></div>
+                      <div style="font-size: 0.5rem; color: #999; margin-top: 0.3rem;">読み込み中...</div>
+                    </div>
+                  </div>
+                  <div class="phone-mock__home-bar"></div>
+                </div>
+              </div>
+              <div class="split-view__server">
+                <div class="request-block">
+                  <div class="request-block__label">→ ページリクエスト</div>
+                  <div class="request-block__code">
+                    <pre><code>GET https://mirai-project.framer.website
+  /kaigo-beauty
+  ?fbclid=IwAR3xxxx
+  &amp;utm_source=ig
+  &amp;utm_medium=paid
+  &amp;...</code></pre>
+                  </div>
+                  <div class="request-block__annotation">
+                    → <span class="server-icon-inline"><span class="server-icon-inline__emoji">🏗️</span>モダンな設計事務所</span>（東京エッジサーバー）へ
+                  </div>
+                </div>
+                <div class="response-block">
+                  <div class="response-block__label">← レスポンス</div>
+                  <div class="response-block__code">
+                    <pre><code>200 OK
+Content-Type: text/html
+
+HTMLにはGTMスニペットが含まれている:
+&lt;script&gt;
+(function(w,d,s,l,i){
+  w[l]=w[l]||[];
+  w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});
+  ...
+})(window,document,'script',
+   'dataLayer','GTM-XXXXXXX');
+&lt;/script&gt;
+← 当社のGTMコンテナID</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- PHASE 2: GTMコンテナの読み込み -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">2</span>
+            GTMコンテナの読み込み（計測開始）
+          </div>
+          <div class="flow-section__content">
+            <p style="margin-bottom: 1rem;">ブラウザがHTMLの中にGTMスニペットを発見し、<span class="server-icon-inline"><span class="server-icon-inline__emoji">📋</span>監視カメラ設置業者</span> に問い合わせます。</p>
+            <div class="request-block">
+              <div class="request-block__label">→ GTMコンテナリクエスト</div>
+              <div class="request-block__code">
+                <pre><code>GET https://www.googletagmanager.com
+  /gtm.js?id=GTM-XXXXXXX</code></pre>
+              </div>
+            </div>
+            <div class="response-block">
+              <div class="response-block__label">← レスポンス</div>
+              <div class="response-block__code">
+                <pre><code>GTMコンテナのJavaScript（約80KB）
+= 当社が設定した全てのタグ・トリガー・
+  変数の定義</code></pre>
+              </div>
+              <div class="response-block__annotation">
+                ブラウザ内でGTMが起動し、dataLayerにページ情報を格納します。
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- PHASE 3: GA4タグの発火 → sGTMへ -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">3</span>
+            GA4タグの発火 → sGTMへ
+          </div>
+          <div class="flow-section__content">
+            <div style="padding: 0.75rem 1rem; background: var(--ch4-light); border-radius: 8px; border: 1px solid var(--ch4-color); margin-bottom: 1rem; font-weight: 700;">
+              ここからが当社の計測基盤の核心です
+            </div>
+            <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
+              <div style="flex: 1; min-width: 200px; padding: 0.75rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                <div style="font-size: 0.8rem; color: var(--text-sub); margin-bottom: 0.25rem;">通常のGA4</div>
+                <div style="font-size: 0.9rem;">google-analytics.com に送信</div>
+              </div>
+              <div style="flex: 1; min-width: 200px; padding: 0.75rem; background: var(--ch4-light); border-radius: 8px; border: 2px solid var(--ch4-color);">
+                <div style="font-size: 0.8rem; color: var(--ch4-dark); font-weight: 700; margin-bottom: 0.25rem;">当社の設定</div>
+                <div style="font-size: 0.9rem; font-weight: 700;">sGTMサーバーに送信（ファーストパーティ）</div>
+              </div>
+            </div>
+            <div class="request-block">
+              <div class="request-block__label">→ GA4データ送信</div>
+              <div class="request-block__code">
+                <pre><code>POST https://sst.ミライプロジェクト.com
+  /g/collect
+  ?v=2
+  &amp;tid=G-XXXXXXXXXX
+  &amp;cid=1234567890.1234567
+  &amp;en=page_view
+  &amp;dl=https://mirai-project...
+  &amp;dr=https://l.instagram.com/...
+  &amp;ep.fbclid=IwAR3xxxx</code></pre>
+              </div>
+              <div class="request-block__annotation">
+                → <span class="server-icon-inline"><span class="server-icon-inline__emoji">🏭</span>当社の秘密工場</span>（Stape上で稼働）へ送信
+              </div>
+            </div>
+
+            <details class="tech-note tech-note--important">
+              <summary>sGTM内部の処理フロー（5ステップ）</summary>
+              <div class="tech-note__body">
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                    <span style="background: var(--ch4-color); color: #fff; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 900; flex-shrink: 0;">1</span>
+                    <span><strong>GA4クライアント</strong>がリクエストを受信</span>
+                  </div>
+                  <div class="flow-arrow"><div class="flow-arrow__line" style="height: 16px;"></div></div>
+                  <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                    <span style="background: var(--ch4-color); color: #fff; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 900; flex-shrink: 0;">2</span>
+                    <span><strong>Stape User ID Power-up:</strong> X-Stape-User-Id を付与（ファーストパーティCookieでユーザーを識別）</span>
+                  </div>
+                  <div class="flow-arrow"><div class="flow-arrow__line" style="height: 16px;"></div></div>
+                  <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                    <span style="background: var(--ch4-color); color: #fff; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 900; flex-shrink: 0;">3</span>
+                    <span><strong>Cookie Keeper Power-up:</strong> Safariの7日Cookie制限を回避（サーバーサイドでCookie寿命を延長）</span>
+                  </div>
+                  <div class="flow-arrow"><div class="flow-arrow__line" style="height: 16px;"></div></div>
+                  <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                    <span style="background: var(--ch4-color); color: #fff; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 900; flex-shrink: 0;">4</span>
+                    <span><strong>GA4サーバータグ発火</strong> → Googleへデータ転送</span>
+                  </div>
+                  <div class="flow-arrow"><div class="flow-arrow__line" style="height: 16px;"></div></div>
+                  <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 1rem; background: var(--ch4-light); border-radius: 8px; border: 1px solid var(--ch4-color);">
+                    <span style="background: var(--ch4-color); color: #fff; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 900; flex-shrink: 0;">5</span>
+                    <span><strong>Meta CAPIタグ発火</strong> → Meta APIへ直接送信</span>
+                  </div>
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- PHASE 4: GA4サーバーへ転送 -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">4</span>
+            GA4サーバーへ転送
+          </div>
+          <div class="flow-section__content">
+            <p style="margin-bottom: 1rem;"><span class="server-icon-inline"><span class="server-icon-inline__emoji">🏭</span>秘密工場</span> → <span class="server-icon-inline"><span class="server-icon-inline__emoji">📊</span>Google統計局</span> へデータを中継転送します。</p>
+            <div class="request-block">
+              <div class="request-block__label">→ GA4サーバーへ中継</div>
+              <div class="request-block__code">
+                <pre><code>POST https://www.google-analytics.com
+  /g/collect
+  （全パラメータを中継転送）</code></pre>
+              </div>
+            </div>
+            <div class="response-block">
+              <div class="response-block__label">← レスポンス</div>
+              <div class="response-block__code">
+                <pre><code>204 No Content（受理完了）</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- PHASE 5: Meta CAPIでサーバー間通信 -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">5</span>
+            Meta CAPIでサーバー間通信
+          </div>
+          <div class="flow-section__content">
+            <p style="margin-bottom: 1rem;"><span class="server-icon-inline"><span class="server-icon-inline__emoji">🏭</span>秘密工場</span> → <span class="server-icon-inline"><span class="server-icon-inline__emoji">📡</span>Metaの受信アンテナ</span>（graph.facebook.com）へ直接送信します。</p>
+            <div class="request-block">
+              <div class="request-block__label">→ Meta CAPI リクエスト</div>
+              <div class="request-block__code">
+                <pre><code>POST https://graph.facebook.com
+  /v18.0/{pixel_id}/events
+  ?access_token={永続アクセストークン}</code></pre>
+              </div>
+            </div>
+            <div class="json-display">
+              <div class="json-display__header">
+                <span class="json-display__dot json-display__dot--red"></span>
+                <span class="json-display__dot json-display__dot--yellow"></span>
+                <span class="json-display__dot json-display__dot--green"></span>
+                <span class="json-display__title">Request Body (JSON)</span>
+              </div>
+              <pre><code><span class="json-line"><span class="json-bracket">{</span></span>
+<span class="json-line">  <span class="json-key">"data"</span>: [<span class="json-bracket">{</span></span>
+<span class="json-line">    <span class="json-key">"event_name"</span>: <span class="json-string">"PageView"</span>,</span>
+<span class="json-line">    <span class="json-key">"event_time"</span>: <span class="json-number">1709449200</span>,</span>
+<span class="json-line">    <span class="json-key">"event_source_url"</span>: <span class="json-string">"https://mirai-project..."</span>,</span>
+<span class="json-line">    <span class="json-key">"action_source"</span>: <span class="json-string">"website"</span>,</span>
+<span class="json-line">    <span class="json-key">"user_data"</span>: <span class="json-bracket">{</span></span>
+<span class="json-line">      <span class="json-key">"fbc"</span>: <span class="json-string">"fb.1.1709449200.IwAR3xxxx"</span>,</span>
+<span class="json-line">      <span class="json-key">"fbp"</span>: <span class="json-string">"fb.1.1709449200.xxxxxxxxxx"</span>,</span>
+<span class="json-line">      <span class="json-key">"client_ip_address"</span>: <span class="json-string">"xxx.xxx.xxx.xxx"</span>,</span>
+<span class="json-line">      <span class="json-key">"client_user_agent"</span>: <span class="json-string">"Mozilla/5.0 (iPhone..."</span></span>
+<span class="json-line">    <span class="json-bracket">}</span></span>
+<span class="json-line">  <span class="json-bracket">}</span>]</span>
+<span class="json-line"><span class="json-bracket">}</span></span></code></pre>
+            </div>
+            <div class="response-block" style="margin-top: 1rem;">
+              <div class="response-block__label">← レスポンス</div>
+              <div class="response-block__code">
+                <pre><code>200 OK
+{ "events_received": 1,
+  "fbtrace_id": "xxxxx" }</code></pre>
+              </div>
+              <div class="response-block__annotation">
+                これにより Meta は:<strong>「第3章のクリック」と「第4章のページ閲覧」をfbclidで紐付ける</strong>ことができます。
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.flow-container -->
+
+      <!-- Meta内部マッチング -->
+      <details class="tech-note tech-note--important animate-on-scroll">
+        <summary>Meta内部でのマッチング</summary>
+        <div class="tech-note__body">
+          <div style="display: flex; flex-direction: column; gap: 0.75rem; align-items: center;">
+            <div style="padding: 0.75rem 1.5rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light); text-align: center; width: 100%; max-width: 500px;">
+              <div style="font-size: 0.8rem; color: var(--text-sub);">第3章: 広告クリック</div>
+              <div style="font-weight: 700;">ad_click (<code>fbclid=IwAR3xxxx</code>)</div>
+            </div>
+            <div style="font-size: 1.5rem;">&#8597;</div>
+            <div style="padding: 0.5rem 1rem; background: var(--note-important-bg); border-radius: 999px; font-weight: 700; font-size: 0.85rem; border: 1px solid var(--note-important-border);">マッチング</div>
+            <div style="font-size: 1.5rem;">&#8597;</div>
+            <div style="padding: 0.75rem 1.5rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light); text-align: center; width: 100%; max-width: 500px;">
+              <div style="font-size: 0.8rem; color: var(--text-sub);">第4章: ページ閲覧</div>
+              <div style="font-weight: 700;">PageView (<code>fbc=fb.1.xxx.IwAR3xxxx</code>)</div>
+            </div>
+          </div>
+          <p style="margin-top: 1rem; text-align: center;">→ <strong>「よし子さんは広告をクリックしてFramerサイトを見た」</strong>と記録されます。</p>
+        </div>
+      </details>
+
+      <!-- 章末の語り -->
+      <div class="story-narration animate-on-scroll">
+        <blockquote>
+          よし子さんの目には美しいランディングページが映っているだけ。でもその裏側では「監視カメラ設置業者（GTM）」がそっとカメラを起動し、「当社の秘密工場（sGTM）」が情報を受け取り、「Google統計局」と「Metaの受信アンテナ」の両方に報告していました。しかもその通信は、Safariの厳しい監視の目をかいくぐる「ファーストパーティ」という魔法のルートを通っているのです。
+        </blockquote>
+      </div>
+
+    </div><!-- /.chapter-body.container -->
+    <!-- CH4 CONTENT END -->
+  </section>
+
+  <!-- Chapter Transition: 4 → 5 -->
+  <div class="chapter-transition">
+    <span class="chapter-transition__arrow">&#8595;</span>
+    <p class="chapter-transition__text">データは正しく計測され、各プラットフォームへ届きました。<br>そして物語はクライマックスへ――コンバージョンの瞬間です。</p>
+    <div class="chapter-transition__divider"></div>
+  </div>
+
+
+  <!-- ====================================================================
+       CHAPTER 5: CV - ゴールの瞬間
+       ==================================================================== -->
+  <section id="ch5" class="chapter" data-chapter="5">
+    <!-- CH5 CONTENT START -->
+    <div class="chapter-header">
+      <span class="chapter-header__number">第５章</span>
+      <h2 class="chapter-header__title">手紙を書いて、想いを届ける</h2>
+      <p class="chapter-header__subtitle">― 公式LPでフォーム入力 → 資料請求 ―</p>
+      <div class="chapter-header__illustration"><img src="images/chapter5-illustration.jpeg" alt="第5章イラスト" style="width: 100%; max-width: 800px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);"></div>
+    </div>
+    <div class="chapter-body container">
+
+      <!-- 場面設定 -->
+      <div class="scene-setting animate-on-scroll">
+        <span class="scene-setting__icon">📝</span>
+        <div class="scene-setting__text">
+          よし子さんはFramerサイトの<strong>「公式サイトで詳しく見る」</strong>ボタンをクリック。ミライプロジェクトの公式LP（別ドメイン）に遷移し、<strong>資料請求フォーム</strong>に名前・メールアドレスを入力して送信する。
+        </div>
+      </div>
+
+      <!-- 登場サーバーキャラクター -->
+      <h3 class="animate-on-scroll" style="margin-bottom: 1.5rem;">この章で新たに登場するサーバーたち</h3>
+      <div class="server-card-grid animate-on-scroll" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="server-card">
+          <span class="server-card__icon">📝</span>
+          <div class="server-card__name">公式LPサーバー（ecforce等）</div>
+          <div class="server-card__role">フォーム処理・顧客管理</div>
+          <div class="server-card__character">「受付の窓口係」</div>
+          <p class="server-card__description">よし子さんの資料請求を受け付け、顧客データベースに登録し、サンクスページへ案内する。</p>
+        </div>
+        <div class="server-card">
+          <span class="server-card__icon">💌</span>
+          <div class="server-card__name">メールサーバー</div>
+          <div class="server-card__role">自動返信メール送信</div>
+          <div class="server-card__character">「お礼の手紙配達人」</div>
+          <p class="server-card__description">資料請求のお礼と資料のリンクを、よし子さんのメールボックスに届ける。</p>
+        </div>
+      </div>
+
+      <!-- 7フェーズのフロー -->
+      <h3 class="animate-on-scroll" style="margin-bottom: 1.5rem;">資料請求完了までの7つのフェーズ</h3>
+      <div class="flow-container">
+
+        <!-- PHASE 1: Framer → 公式LP への遷移 -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">1</span>
+            Framer → 公式LP への遷移
+          </div>
+          <div class="flow-section__content">
+            <p style="margin-bottom: 1rem;">よし子さんが「公式サイトで詳しく見る」をタップ。</p>
+
+            <details class="tech-note tech-note--info">
+              <summary>GTMが「離脱クリック」を検知</summary>
+              <div class="tech-note__body">
+                <div class="json-display">
+                  <div class="json-display__header">
+                    <span class="json-display__dot json-display__dot--red"></span>
+                    <span class="json-display__dot json-display__dot--yellow"></span>
+                    <span class="json-display__dot json-display__dot--green"></span>
+                    <span class="json-display__title">dataLayer.push()</span>
+                  </div>
+                  <pre><code><span class="json-line"><span class="json-bracket">{</span></span>
+<span class="json-line">  <span class="json-key">'event'</span>: <span class="json-string">'outbound_click'</span>,</span>
+<span class="json-line">  <span class="json-key">'link_url'</span>: <span class="json-string">'https://mirai-project.jp/lp/kaigo-beauty'</span>,</span>
+<span class="json-line">  <span class="json-key">'link_text'</span>: <span class="json-string">'公式サイトで詳しく見る'</span></span>
+<span class="json-line"><span class="json-bracket">}</span></span></code></pre>
+                </div>
+                <p style="margin-top: 0.5rem;">→ sGTM経由でGA4 + Meta CAPIに送信（fbclid情報が引き継がれる）</p>
+              </div>
+            </details>
+
+            <div class="request-block" style="margin-top: 1rem;">
+              <div class="request-block__label">→ 公式LPリクエスト</div>
+              <div class="request-block__code">
+                <pre><code>GET https://mirai-project.jp
+  /lp/kaigo-beauty
+  ?utm_source=ig
+  &amp;utm_medium=paid
+  &amp;utm_campaign=kaigo_beauty_2026
+  &amp;fbclid=IwAR3xxxx</code></pre>
+              </div>
+              <div class="request-block__annotation">
+                → <span class="server-icon-inline"><span class="server-icon-inline__emoji">📝</span>受付の窓口係</span> へ
+              </div>
+            </div>
+            <div class="response-block">
+              <div class="response-block__label">← レスポンス</div>
+              <div class="response-block__code">
+                <pre><code>200 OK
+（公式LPのHTML、GTMスニペット含む、
+ フォーム表示）</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- PHASE 2: フォーム入力中（MCV） -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">2</span>
+            フォーム入力中（マイクロコンバージョン）
+          </div>
+          <div class="flow-section__content">
+            <div style="padding: 0.75rem 1rem; background: var(--ch5-light); border-radius: 8px; border: 1px solid var(--ch5-color); margin-bottom: 1rem; font-weight: 700;">
+              当社独自の計測技術: フォーム入力の「段階」を検知
+            </div>
+
+            <div class="split-view">
+              <div class="split-view__phone">
+                <div class="phone-mock">
+                  <div class="phone-mock__notch"></div>
+                  <div class="phone-mock__screen">
+                    <div style="font-size: 0.65rem; font-weight: 700; margin-bottom: 0.4rem;">資料請求フォーム</div>
+                    <div style="margin-bottom: 0.3rem;">
+                      <div style="font-size: 0.5rem; color: #666; margin-bottom: 0.15rem;">お名前</div>
+                      <div style="background: #fff; border: 2px solid var(--ch5-color); border-radius: 4px; padding: 0.25rem 0.4rem; font-size: 0.6rem;">吉田よし子<span style="animation: flowPulse 1s ease-in-out infinite;">|</span></div>
+                    </div>
+                    <div style="margin-bottom: 0.3rem;">
+                      <div style="font-size: 0.5rem; color: #666; margin-bottom: 0.15rem;">メールアドレス</div>
+                      <div style="background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 0.25rem 0.4rem; font-size: 0.6rem; color: #999;">入力してください</div>
+                    </div>
+                    <div style="margin-bottom: 0.3rem;">
+                      <div style="font-size: 0.5rem; color: #666; margin-bottom: 0.15rem;">電話番号</div>
+                      <div style="background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 0.25rem 0.4rem; font-size: 0.6rem; color: #999;">入力してください</div>
+                    </div>
+                  </div>
+                  <div class="phone-mock__home-bar"></div>
+                </div>
+              </div>
+              <div class="split-view__server">
+                <p style="margin-bottom: 0.75rem;"><strong>「お名前」欄に「吉田よし子」と入力:</strong></p>
+
+                <details class="tech-note tech-note--info" style="margin-top: 0;">
+                  <summary>フォーム入力検知の仕組み（ポーリング方式）</summary>
+                  <div class="tech-note__body">
+                    <div class="json-display">
+                      <div class="json-display__header">
+                        <span class="json-display__dot json-display__dot--red"></span>
+                        <span class="json-display__dot json-display__dot--yellow"></span>
+                        <span class="json-display__dot json-display__dot--green"></span>
+                        <span class="json-display__title">Web GTM カスタムHTMLタグ</span>
+                      </div>
+                      <pre><code><span class="json-line">setInterval(function(){</span>
+<span class="json-line">  var name = document</span>
+<span class="json-line">    .querySelector('#name').value;</span>
+<span class="json-line">  if(name.length > 0 &amp;&amp; !nameDetected){</span>
+<span class="json-line">    dataLayer.push({</span>
+<span class="json-line">      <span class="json-key">'event'</span>:<span class="json-string">'form_name'</span>,</span>
+<span class="json-line">      <span class="json-key">'user_data'</span>:{</span>
+<span class="json-line">        <span class="json-key">'name'</span>:<span class="json-string">'吉田よし子'</span></span>
+<span class="json-line">      }</span>
+<span class="json-line">    });</span>
+<span class="json-line">    nameDetected = true;</span>
+<span class="json-line">  }</span>
+<span class="json-line">}, 1000);</span></code></pre>
+                    </div>
+                  </div>
+                </details>
+
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem;">
+                  <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.6rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                    <span>→ GA4タグ発火 → sGTMへ送信</span>
+                  </div>
+                  <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.6rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                    <span class="server-icon-inline"><span class="server-icon-inline__emoji">💎</span>Stape Store</span>
+                    <span>に蓄積: <code>{"name":"吉田よし子"}</code></span>
+                  </div>
+                  <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.6rem 1rem; background: var(--ch5-light); border-radius: 8px; border: 1px solid var(--ch5-color);">
+                    <span>→ Meta CAPIで <strong>Lead</strong> イベント（名前入力 = 見込み客の兆候）</span>
+                  </div>
+                </div>
+
+                <p style="margin-top: 1.25rem; margin-bottom: 0.75rem;"><strong>「メールアドレス」欄に入力:</strong></p>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                  <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.6rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                    <span class="server-icon-inline"><span class="server-icon-inline__emoji">💎</span>Stape Store</span>
+                    <span>をエンリッチ（データ追加）</span>
+                  </div>
+
+                  <details class="tech-note tech-note--info" style="margin: 0;">
+                    <summary>reStore変数による過去データのマージ</summary>
+                    <div class="tech-note__body">
+                      <div class="json-display">
+                        <div class="json-display__header">
+                          <span class="json-display__dot json-display__dot--red"></span>
+                          <span class="json-display__dot json-display__dot--yellow"></span>
+                          <span class="json-display__dot json-display__dot--green"></span>
+                          <span class="json-display__title">マージ後のStape Storeデータ</span>
+                        </div>
+                        <pre><code><span class="json-line"><span class="json-bracket">{</span></span>
+<span class="json-line">  <span class="json-key">"name"</span>: <span class="json-string">"吉田よし子"</span>,</span>
+<span class="json-line">  <span class="json-key">"email"</span>: <span class="json-string">"yoshiko@example.com"</span>,</span>
+<span class="json-line">  <span class="json-key">"timestamp"</span>: <span class="json-string">"2026-..."</span></span>
+<span class="json-line"><span class="json-bracket">}</span></span></code></pre>
+                      </div>
+                    </div>
+                  </details>
+
+                  <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.6rem 1rem; background: var(--ch5-light); border-radius: 8px; border: 1px solid var(--ch5-color);">
+                    <span>→ Meta CAPIで <strong>Contact</strong> イベント（EMQ大幅向上）</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- PHASE 3: フォーム送信（メインCV） -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">3</span>
+            フォーム送信（メインCV: コンバージョン）
+          </div>
+          <div class="flow-section__content">
+            <div class="split-view">
+              <div class="split-view__phone">
+                <div class="phone-mock">
+                  <div class="phone-mock__notch"></div>
+                  <div class="phone-mock__screen">
+                    <div style="font-size: 0.65rem; font-weight: 700; margin-bottom: 0.3rem;">資料請求フォーム</div>
+                    <div style="margin-bottom: 0.2rem;">
+                      <div style="font-size: 0.5rem; color: #666;">お名前</div>
+                      <div style="font-size: 0.6rem; padding: 0.15rem 0;">吉田よし子</div>
+                    </div>
+                    <div style="margin-bottom: 0.2rem;">
+                      <div style="font-size: 0.5rem; color: #666;">メールアドレス</div>
+                      <div style="font-size: 0.6rem; padding: 0.15rem 0;">yoshiko@example.com</div>
+                    </div>
+                    <div style="margin-bottom: 0.3rem;">
+                      <div style="font-size: 0.5rem; color: #666;">電話番号</div>
+                      <div style="font-size: 0.6rem; padding: 0.15rem 0;">090-xxxx-xxxx</div>
+                    </div>
+                    <div style="background: var(--ch5-color); color: #fff; text-align: center; padding: 0.4rem; border-radius: 6px; font-size: 0.65rem; font-weight: 700; animation: flowPulse 2s ease-in-out infinite;">
+                      資料請求する →
+                    </div>
+                  </div>
+                  <div class="phone-mock__home-bar"></div>
+                </div>
+              </div>
+              <div class="split-view__server">
+                <p style="margin-bottom: 0.75rem;">よし子さんが<strong>「資料請求する」ボタンをタップ</strong>します。</p>
+                <div class="request-block">
+                  <div class="request-block__label">→ フォーム送信</div>
+                  <div class="request-block__code">
+                    <pre><code>POST https://mirai-project.jp
+  /lp/kaigo-beauty/confirm
+Content-Type:
+  application/x-www-form-urlencoded
+Body:
+  name=吉田よし子
+  &amp;email=yoshiko@example.com
+  &amp;phone=090-xxxx-xxxx
+  &amp;action=request_document</code></pre>
+                  </div>
+                  <div class="request-block__annotation">
+                    → <span class="server-icon-inline"><span class="server-icon-inline__emoji">📝</span>受付の窓口係</span> へ
+                  </div>
+                </div>
+                <p style="margin: 0.75rem 0;"><strong>公式LPサーバーが3つの処理を実行:</strong></p>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                    <span style="background: var(--ch5-color); color: #fff; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 900; flex-shrink: 0;">1</span>
+                    <span>DB保存（顧客データ登録）</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                    <span style="background: var(--ch5-color); color: #fff; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 900; flex-shrink: 0;">2</span>
+                    <span>自動返信メール送信</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                    <span style="background: var(--ch5-color); color: #fff; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 900; flex-shrink: 0;">3</span>
+                    <span>サンクスページへリダイレクト</span>
+                  </div>
+                </div>
+                <div class="response-block" style="margin-top: 0.75rem;">
+                  <div class="response-block__label">← レスポンス</div>
+                  <div class="response-block__code">
+                    <pre><code>HTTP/2 302 Found
+Location: /lp/kaigo-beauty/thanks</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- PHASE 4: サンクスページ → CV計測の集大成 -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">4</span>
+            サンクスページ → CV計測の集大成
+          </div>
+          <div class="flow-section__content">
+            <div class="split-view">
+              <div class="split-view__phone">
+                <div class="phone-mock">
+                  <div class="phone-mock__notch"></div>
+                  <div class="phone-mock__screen">
+                    <div style="text-align: center; padding: 0.75rem 0;">
+                      <div style="font-size: 2rem; margin-bottom: 0.3rem;">&#10003;</div>
+                      <div style="font-size: 0.75rem; font-weight: 700; margin-bottom: 0.2rem;">資料請求が完了しました</div>
+                      <div style="font-size: 0.55rem; color: #666;">ご登録のメールアドレスに<br>資料をお送りしました。</div>
+                    </div>
+                  </div>
+                  <div class="phone-mock__home-bar"></div>
+                </div>
+              </div>
+              <div class="split-view__server">
+                <p style="margin-bottom: 0.75rem;">サンクスページのHTMLが読み込まれると:</p>
+                <div class="json-display">
+                  <div class="json-display__header">
+                    <span class="json-display__dot json-display__dot--red"></span>
+                    <span class="json-display__dot json-display__dot--yellow"></span>
+                    <span class="json-display__dot json-display__dot--green"></span>
+                    <span class="json-display__title">dataLayer.push()</span>
+                  </div>
+                  <pre><code><span class="json-line"><span class="json-bracket">{</span></span>
+<span class="json-line">  <span class="json-key">'event'</span>: <span class="json-string">'purchase'</span>,</span>
+<span class="json-line">  <span class="json-key">'transaction_id'</span>: <span class="json-string">'MR-2026030301'</span>,</span>
+<span class="json-line">  <span class="json-key">'value'</span>: <span class="json-number">0</span></span>
+<span class="json-line"><span class="json-bracket">}</span></span></code></pre>
+                </div>
+                <p style="margin-top: 0.75rem;">GTMコンテナ内のトリガーが発火 → <strong>全計測タグが一斉に発火</strong>します。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- PHASE 5: sGTM での最終処理 -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">5</span>
+            sGTM での最終処理（全てが集約される場所）
+          </div>
+          <div class="flow-section__content">
+            <div style="padding: 0.75rem 1rem; background: var(--ch5-light); border-radius: 8px; border: 2px solid var(--ch5-color); margin-bottom: 1rem; font-weight: 700; text-align: center;">
+              🏭 当社の秘密工場 ― 最終処理ライン
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+              <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                <span style="background: var(--ch5-color); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900; flex-shrink: 0;">1</span>
+                <span><strong>GA4クライアント</strong>がデータ受信</span>
+              </div>
+              <div class="flow-arrow"><div class="flow-arrow__line" style="height: 16px;"></div></div>
+              <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.75rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                <span style="background: var(--ch5-color); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900; flex-shrink: 0;">2</span>
+                <div>
+                  <strong>Stape Store reStore変数</strong>でデータ復元・全てマージ
+                  <details class="tech-note tech-note--info" style="margin: 0.5rem 0 0;">
+                    <summary>マージされた全データ</summary>
+                    <div class="tech-note__body">
+                      <div class="json-display">
+                        <div class="json-display__header">
+                          <span class="json-display__dot json-display__dot--red"></span>
+                          <span class="json-display__dot json-display__dot--yellow"></span>
+                          <span class="json-display__dot json-display__dot--green"></span>
+                          <span class="json-display__title">Stape Store - 統合データ</span>
+                        </div>
+                        <pre><code><span class="json-line"><span class="json-bracket">{</span></span>
+<span class="json-line">  <span class="json-key">"name"</span>: <span class="json-string">"吉田よし子"</span>,</span>
+<span class="json-line">  <span class="json-key">"email"</span>: <span class="json-string">"yoshiko@example.com"</span>,</span>
+<span class="json-line">  <span class="json-key">"phone"</span>: <span class="json-string">"090-xxxx-xxxx"</span>,</span>
+<span class="json-line">  <span class="json-key">"fbclid"</span>: <span class="json-string">"IwAR3xxxx"</span>,</span>
+<span class="json-line">  <span class="json-key">"transaction_id"</span>: <span class="json-string">"MR-2026030301"</span></span>
+<span class="json-line"><span class="json-bracket">}</span></span></code></pre>
+                      </div>
+                    </div>
+                  </details>
+                </div>
+              </div>
+              <div class="flow-arrow"><div class="flow-arrow__line" style="height: 16px;"></div></div>
+              <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                <span style="background: var(--ch5-color); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900; flex-shrink: 0;">3</span>
+                <span><strong>GA4サーバータグ</strong> → purchase イベント送信</span>
+              </div>
+              <div class="flow-arrow"><div class="flow-arrow__line" style="height: 16px;"></div></div>
+              <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.75rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                <span style="background: var(--ch5-color); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900; flex-shrink: 0;">4</span>
+                <div>
+                  <strong>Meta CAPIタグ</strong> → Purchase イベント送信
+                  <details class="tech-note tech-note--critical" style="margin: 0.5rem 0 0;">
+                    <summary>sha256ハッシュ化されたuser_data</summary>
+                    <div class="tech-note__body">
+                      <p style="margin-bottom: 0.75rem;">Meta CAPIでは個人情報を<strong>sha256でハッシュ化</strong>してから送信します:</p>
+                      <div style="display: flex; flex-direction: column; gap: 0.4rem; font-family: var(--font-code); font-size: 0.85rem;">
+                        <div style="padding: 0.4rem 0.75rem; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid var(--border-light);">
+                          <span style="color: var(--text-sub);">em:</span> yoshiko@example.com → <code>a1b2c3d4e5...</code>
+                        </div>
+                        <div style="padding: 0.4rem 0.75rem; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid var(--border-light);">
+                          <span style="color: var(--text-sub);">ph:</span> 090xxxxxxxx → <code>f6g7h8i9j0...</code>
+                        </div>
+                        <div style="padding: 0.4rem 0.75rem; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid var(--border-light);">
+                          <span style="color: var(--text-sub);">fn:</span> よし子 → <code>k1l2m3n4o5...</code>
+                        </div>
+                        <div style="padding: 0.4rem 0.75rem; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid var(--border-light);">
+                          <span style="color: var(--text-sub);">ln:</span> 吉田 → <code>p6q7r8s9t0...</code>
+                        </div>
+                        <div style="padding: 0.4rem 0.75rem; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid var(--border-light);">
+                          <span style="color: var(--text-sub);">fbc:</span> fb.1.xxx.IwAR3xxxx
+                        </div>
+                      </div>
+                      <div class="json-display" style="margin-top: 0.75rem;">
+                        <div class="json-display__header">
+                          <span class="json-display__dot json-display__dot--red"></span>
+                          <span class="json-display__dot json-display__dot--yellow"></span>
+                          <span class="json-display__dot json-display__dot--green"></span>
+                          <span class="json-display__title">Meta CAPI Request Body</span>
+                        </div>
+                        <pre><code><span class="json-line"><span class="json-key">"custom_data"</span>: <span class="json-bracket">{</span></span>
+<span class="json-line">  <span class="json-key">"content_name"</span>: <span class="json-string">"kaigo_beauty_doc"</span>,</span>
+<span class="json-line">  <span class="json-key">"order_id"</span>: <span class="json-string">"MR-2026030301"</span></span>
+<span class="json-line"><span class="json-bracket">}</span></span></code></pre>
+                      </div>
+                    </div>
+                  </details>
+                </div>
+              </div>
+              <div class="flow-arrow"><div class="flow-arrow__line" style="height: 16px;"></div></div>
+              <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                <span style="background: var(--ch5-color); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900; flex-shrink: 0;">5</span>
+                <span><strong>Duplicate Transaction Checker:</strong> order_idで重複送信を防止</span>
+              </div>
+              <div class="flow-arrow"><div class="flow-arrow__line" style="height: 16px;"></div></div>
+              <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; background: var(--ch5-light); border-radius: 8px; border: 1px solid var(--ch5-color);">
+                <span style="background: var(--ch5-color); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900; flex-shrink: 0;">6</span>
+                <span><strong>Google Ads Enhanced Conversions タグ</strong> → Google Ads API（user_data付きでCV送信）</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- PHASE 6: Meta側での最終マッチング -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">6</span>
+            Meta側での最終マッチング（全章の集大成）
+          </div>
+          <div class="flow-section__content">
+            <!-- タイムライン表示: 第2章〜第5章 -->
+            <div style="position: relative; padding-left: 2rem;">
+              <!-- 縦のつなぎ線 -->
+              <div style="position: absolute; left: 13px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--ch2-color), var(--ch3-color), var(--ch4-color), var(--ch5-color));"></div>
+
+              <!-- 第2章 -->
+              <div style="position: relative; padding: 0.75rem 0 1.25rem; padding-left: 1.5rem;">
+                <div style="position: absolute; left: -8px; top: 0.75rem; width: 20px; height: 20px; border-radius: 50%; background: var(--ch2-color); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.6rem; font-weight: 900;">2</div>
+                <div style="font-size: 0.8rem; color: var(--text-sub);">第2章: フィード表示</div>
+                <div style="font-weight: 700;">impression <code style="font-size: 0.8rem;">(ad_id=120211xxx)</code></div>
+              </div>
+
+              <!-- 第3章 -->
+              <div style="position: relative; padding: 0.75rem 0 1.25rem; padding-left: 1.5rem;">
+                <div style="position: absolute; left: -8px; top: 0.75rem; width: 20px; height: 20px; border-radius: 50%; background: var(--ch3-color); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.6rem; font-weight: 900;">3</div>
+                <div style="font-size: 0.8rem; color: var(--text-sub);">第3章: 広告クリック</div>
+                <div style="font-weight: 700;">link_click <code style="font-size: 0.8rem;">(fbclid=IwAR3xxxx)</code></div>
+              </div>
+
+              <!-- 第4章 -->
+              <div style="position: relative; padding: 0.75rem 0 1.25rem; padding-left: 1.5rem;">
+                <div style="position: absolute; left: -8px; top: 0.75rem; width: 20px; height: 20px; border-radius: 50%; background: var(--ch4-color); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.6rem; font-weight: 900;">4</div>
+                <div style="font-size: 0.8rem; color: var(--text-sub);">第4章: ページ閲覧</div>
+                <div style="font-weight: 700;">PageView <code style="font-size: 0.8rem;">(fbc=fb.1.xxx.IwAR3xxxx)</code></div>
+              </div>
+
+              <!-- 第5章 -->
+              <div style="position: relative; padding: 0.75rem 0 0.5rem; padding-left: 1.5rem;">
+                <div style="position: absolute; left: -8px; top: 0.75rem; width: 20px; height: 20px; border-radius: 50%; background: var(--ch5-color); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.6rem; font-weight: 900;">5</div>
+                <div style="font-size: 0.8rem; color: var(--text-sub);">第5章: 資料請求</div>
+                <div style="font-weight: 700;">Purchase <code style="font-size: 0.8rem;">(fbc + em + ph + fn + ln)</code></div>
+              </div>
+            </div>
+
+            <div style="margin-top: 1rem; padding: 1rem; background: var(--ch5-light); border-radius: 8px; border: 2px solid var(--ch5-color); text-align: center;">
+              <p><strong>全てが fbclid と user_data で紐付けられ、</strong></p>
+              <p>Meta広告マネージャーに<strong>「1件のコンバージョン」</strong>として計上されます。</p>
+            </div>
+
+            <details class="tech-note tech-note--important" style="margin-top: 1rem;">
+              <summary>EMQ（Event Match Quality）スコア</summary>
+              <div class="tech-note__body">
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem;">
+                  <span style="padding: 0.3rem 0.6rem; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid var(--border-light); font-size: 0.85rem;">メール</span>
+                  <span style="padding: 0.3rem 0.6rem; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid var(--border-light); font-size: 0.85rem;">電話</span>
+                  <span style="padding: 0.3rem 0.6rem; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid var(--border-light); font-size: 0.85rem;">氏名</span>
+                  <span style="padding: 0.3rem 0.6rem; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid var(--border-light); font-size: 0.85rem;">IP</span>
+                  <span style="padding: 0.3rem 0.6rem; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid var(--border-light); font-size: 0.85rem;">UA</span>
+                  <span style="padding: 0.3rem 0.6rem; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid var(--border-light); font-size: 0.85rem;">fbc</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                  <span style="font-size: 0.9rem;">推定スコア:</span>
+                  <div style="flex: 1; background: #eee; border-radius: 999px; height: 12px; position: relative; overflow: hidden;">
+                    <div style="width: 85%; height: 100%; background: linear-gradient(90deg, var(--ch4-color), var(--ch5-color)); border-radius: 999px;"></div>
+                  </div>
+                  <span style="font-weight: 900; font-size: 1.1rem; color: var(--ch5-dark);">8.5 / 10.0</span>
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="flow-arrow flow-arrow--animated"><div class="flow-arrow__line"></div></div>
+
+        <!-- PHASE 7: よし子さんのもとへ -->
+        <div class="flow-section animate-on-scroll">
+          <div class="flow-section__header">
+            <span class="flow-section__step-number">7</span>
+            よし子さんのもとへ
+          </div>
+          <div class="flow-section__content">
+            <div class="split-view">
+              <div class="split-view__phone">
+                <div class="phone-mock">
+                  <div class="phone-mock__notch"></div>
+                  <div class="phone-mock__screen">
+                    <div style="background: #f5f5f5; padding: 0.3rem 0.5rem; border-radius: 4px; margin-bottom: 0.5rem;">
+                      <span style="font-size: 0.5rem; color: #999;">&#9993; メール</span>
+                    </div>
+                    <div style="padding: 0.3rem 0;">
+                      <div style="font-size: 0.55rem; color: #999;">From: info@mirai-project.jp</div>
+                      <div style="font-size: 0.55rem; color: #999;">To: yoshiko@example.com</div>
+                      <div style="font-size: 0.65rem; font-weight: 700; margin-top: 0.3rem;">【ミライプロジェクト】<br>資料請求ありがとうございます</div>
+                      <div style="font-size: 0.55rem; color: #666; margin-top: 0.3rem; line-height: 1.5;">
+                        吉田よし子 様<br><br>
+                        この度は資料をご請求いただき<br>誠にありがとうございます。<br>
+                        ...
+                      </div>
+                    </div>
+                  </div>
+                  <div class="phone-mock__home-bar"></div>
+                </div>
+              </div>
+              <div class="split-view__server">
+                <p style="margin-bottom: 0.75rem;"><span class="server-icon-inline"><span class="server-icon-inline__emoji">💌</span>お礼の手紙配達人</span> がよし子さんのiPhoneメールアプリへ。</p>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                  <div style="padding: 0.6rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                    <strong>From:</strong> info@mirai-project.jp
+                  </div>
+                  <div style="padding: 0.6rem 1rem; background: #fff; border-radius: 8px; border: 1px solid var(--border-light);">
+                    <strong>To:</strong> yoshiko@example.com
+                  </div>
+                  <div style="padding: 0.6rem 1rem; background: var(--ch5-light); border-radius: 8px; border: 1px solid var(--ch5-color);">
+                    <strong>Subject:</strong> 【ミライプロジェクト】資料請求ありがとうございます
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.flow-container -->
+
+      <!-- 章末の語り -->
+      <div class="story-narration animate-on-scroll">
+        <blockquote>
+          よし子さんがフォームに名前を書き始めたその瞬間から、「データの宝石磨き職人（Stape Store）」は一文字一文字を大切に磨き、「当社の秘密工場（sGTM）」は全ての情報を一つの宝箱にまとめ上げ、「Google統計局」と「Metaの受信アンテナ」に届けました。
+          <br><br>
+          第2章でフィードに広告が現れてから、第5章でフォームが送信されるまで。よし子さんの「たった5分の行動」の裏側で、何十ものサーバーが手紙をやりとりし、たった1つの「コンバージョン」として記録されたのです。
+          <br><br>
+          そしてよし子さんのメールボックスには、新しい人生への第一歩となる資料が届きました。
+        </blockquote>
+      </div>
+
+    </div><!-- /.chapter-body.container -->
+    <!-- CH5 CONTENT END -->
+  </section>
+
+  <!-- Chapter Transition: 5 → Epilogue -->
+  <div class="chapter-transition">
+    <span class="chapter-transition__arrow">&#8595;</span>
+    <p class="chapter-transition__text">よし子さんの見えない旅が終わりました。<br>最後に、旅の全体像を振り返りましょう。</p>
+    <div class="chapter-transition__divider"></div>
+  </div>
+
+
+  <!-- ====================================================================
+       EPILOGUE: 全体アーキテクチャ
+       ==================================================================== -->
+  <section id="epilogue" class="chapter" data-chapter="epilogue">
+    <!-- EPILOGUE CONTENT START -->
+    <div class="chapter-header" style="background: linear-gradient(135deg, #FEF9C3 0%, #DBEAFE 50%, #D1FAE5 100%);">
+      <span class="chapter-header__number" style="color: var(--text-dark-navy); border-color: var(--text-dark-navy);">エピローグ</span>
+      <h2 class="chapter-header__title" style="color: var(--text-dark-navy);">見えない旅の全体像</h2>
+      <p class="chapter-header__subtitle">― すべてはよし子さんの1タップから始まった ―</p>
+    </div>
+    <div class="chapter-body container">
+
+      <!-- 全体アーキテクチャ図 -->
+      <style>
+        /* Epilogue: Extended Architecture Diagram */
+        .arch-layer--user {
+          background: linear-gradient(135deg, #F0F9FF, #E0F2FE);
+          text-align: center;
+        }
+        .arch-layer--user .arch-layer__title { color: #0369A1; }
+
+        .arch-node--large {
+          background: rgba(255, 255, 255, 0.95);
+          border-radius: 14px;
+          padding: 1.25rem 1.5rem;
+          min-width: 280px;
+          box-shadow: var(--shadow-md);
+          border: 2px solid var(--ch4-color);
+        }
+        .arch-node--large .arch-node__name {
+          font-size: 1rem;
+          font-weight: 700;
+          color: var(--ch4-dark);
+        }
+        .arch-node--large .arch-node__icon {
+          font-size: 1.8rem;
+        }
+
+        .sgtm-internals {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          margin-top: 0.75rem;
+          padding-top: 0.75rem;
+          border-top: 1px dashed rgba(16, 185, 129, 0.3);
+          justify-content: center;
+        }
+        .sgtm-internals__item {
+          background: var(--ch4-light);
+          border-radius: 8px;
+          padding: 0.35rem 0.75rem;
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: var(--ch4-dark);
+          white-space: nowrap;
+        }
+
+        .arch-node__subtitle {
+          font-size: 0.7rem;
+          color: var(--text-sub);
+          margin-top: 0.15rem;
+        }
+
+        /* Epilogue: Takeaway cards */
+        .epilogue-takeaways {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+          gap: 1.5rem;
+          margin: 3rem 0 2rem;
+        }
+        .epilogue-card {
+          background: #fff;
+          border-radius: 14px;
+          padding: 1.75rem;
+          box-shadow: var(--shadow-sm);
+          border-left: 4px solid var(--ch1-color);
+          transition: all var(--transition-base);
+        }
+        .epilogue-card:hover {
+          box-shadow: var(--shadow-hover);
+          transform: translateY(-3px);
+        }
+        .epilogue-card:nth-child(2) { border-left-color: var(--ch4-color); }
+        .epilogue-card:nth-child(3) { border-left-color: var(--ch5-color); }
+        .epilogue-card:nth-child(4) { border-left-color: var(--ch2-color); }
+
+        .epilogue-card__icon {
+          font-size: 2rem;
+          margin-bottom: 0.75rem;
+          display: block;
+        }
+        .epilogue-card__title {
+          font-family: var(--font-sans);
+          font-weight: 700;
+          font-size: 1.1rem;
+          margin-bottom: 0.5rem;
+          color: var(--text-dark-navy);
+        }
+        .epilogue-card__body {
+          font-size: 0.9rem;
+          line-height: 1.7;
+          color: var(--text-sub);
+        }
+
+        @media (max-width: 768px) {
+          .arch-node--large {
+            min-width: auto;
+            width: 100%;
+          }
+          .sgtm-internals {
+            gap: 0.35rem;
+          }
+          .sgtm-internals__item {
+            font-size: 0.65rem;
+            padding: 0.25rem 0.5rem;
+          }
+          .epilogue-takeaways {
+            grid-template-columns: 1fr;
+          }
+        }
+      </style>
+
+      <div class="architecture-diagram animate-on-scroll">
+
+        <!-- 最上段: よし子さん -->
+        <div class="arch-layer arch-layer--user">
+          <div class="arch-layer__title">よし子さん</div>
+          <div class="arch-layer__nodes">
+            <div class="arch-node">
+              <span class="arch-node__icon">📱</span>
+              <span class="arch-node__name">よし子のiPhone</span>
+              <div class="arch-node__subtitle">Safari / Instagram</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arch-connection">
+          <div class="arch-connection__line"></div>
+        </div>
+
+        <!-- ネットワーク層 -->
+        <div class="arch-layer arch-layer--network">
+          <div class="arch-layer__title">ネットワーク層</div>
+          <div class="arch-layer__nodes">
+            <div class="arch-node">
+              <span class="arch-node__icon">📒</span>
+              <span class="arch-node__name">DNSサーバー</span>
+              <div class="arch-node__subtitle">住所録のおじいさん</div>
+            </div>
+            <div class="arch-node">
+              <span class="arch-node__icon">🌐</span>
+              <span class="arch-node__name">CDN各種</span>
+              <div class="arch-node__subtitle">Cloudflare, Vercel, Meta CDN</div>
+            </div>
+            <div class="arch-node">
+              <span class="arch-node__icon">🔐</span>
+              <span class="arch-node__name">SSL/TLS</span>
+              <div class="arch-node__subtitle">暗号化の封筒</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arch-connection">
+          <div class="arch-connection__line"></div>
+        </div>
+
+        <!-- アプリケーション層 -->
+        <div class="arch-layer arch-layer--application">
+          <div class="arch-layer__title">アプリケーション層</div>
+          <div class="arch-layer__nodes" style="flex-direction: column; align-items: center;">
+
+            <!-- Meta API サーバー群 -->
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; width: 100%; margin-bottom: 0.75rem;">
+              <div class="arch-node">
+                <span class="arch-node__icon">🎪</span>
+                <span class="arch-node__name">Meta APIサーバー群</span>
+                <div class="arch-node__subtitle">フィード生成</div>
+              </div>
+              <div class="arch-node">
+                <span class="arch-node__icon">🔮</span>
+                <span class="arch-node__name">ML ランキング</span>
+                <div class="arch-node__subtitle">表示順の決定</div>
+              </div>
+              <div class="arch-node">
+                <span class="arch-node__icon">🎯</span>
+                <span class="arch-node__name">広告配信 (RTB)</span>
+                <div class="arch-node__subtitle">リアルタイム入札</div>
+              </div>
+              <div class="arch-node">
+                <span class="arch-node__icon">📮</span>
+                <span class="arch-node__name">クリック計測</span>
+                <div class="arch-node__subtitle">リダイレクト処理</div>
+              </div>
+            </div>
+
+            <!-- Framer + 公式LP -->
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; width: 100%; margin-bottom: 0.75rem;">
+              <div class="arch-node">
+                <span class="arch-node__icon">🏗️</span>
+                <span class="arch-node__name">Framerサーバー</span>
+                <div class="arch-node__subtitle">LP (当社制作)</div>
+              </div>
+              <div class="arch-node">
+                <span class="arch-node__icon">📝</span>
+                <span class="arch-node__name">公式LPサーバー</span>
+                <div class="arch-node__subtitle">ecforce等 / フォーム処理</div>
+              </div>
+            </div>
+
+            <!-- sGTM (特別ノード) -->
+            <div class="arch-node arch-node--large">
+              <span class="arch-node__icon">🏭</span>
+              <span class="arch-node__name">当社 sGTMサーバー (Stape上)</span>
+              <div class="arch-node__subtitle">sst.ドメイン.com</div>
+              <div class="sgtm-internals">
+                <span class="sgtm-internals__item">GA4クライアント</span>
+                <span class="sgtm-internals__item">💎 Stape Store</span>
+                <span class="sgtm-internals__item">Meta CAPIタグ</span>
+                <span class="sgtm-internals__item">🔐 Cookie Keeper</span>
+                <span class="sgtm-internals__item">GA4サーバータグ</span>
+                <span class="sgtm-internals__item">🛡️ Dup Checker</span>
+                <span class="sgtm-internals__item">GAds ECタグ</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="arch-connection">
+          <div class="arch-connection__line"></div>
+        </div>
+
+        <!-- データ層 -->
+        <div class="arch-layer arch-layer--data">
+          <div class="arch-layer__title">データ層</div>
+          <div class="arch-layer__nodes">
+            <div class="arch-node">
+              <span class="arch-node__icon">📊</span>
+              <span class="arch-node__name">GA4サーバー</span>
+              <div class="arch-node__subtitle">analytics.google.com</div>
+            </div>
+            <div class="arch-node">
+              <span class="arch-node__icon">📡</span>
+              <span class="arch-node__name">Meta広告API</span>
+              <div class="arch-node__subtitle">graph.facebook.com</div>
+            </div>
+            <div class="arch-node">
+              <span class="arch-node__icon">💰</span>
+              <span class="arch-node__name">Google Ads API</span>
+              <div class="arch-node__subtitle">googleads.googleapis.com</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.architecture-diagram -->
+
+
+      <!-- 制作ノート: この物語で新人に伝えたいこと -->
+      <h3 class="animate-on-scroll" style="text-align: center; margin: 3rem 0 1rem; font-size: 1.4rem;">この物語で新人に伝えたいこと</h3>
+
+      <div class="epilogue-takeaways">
+
+        <div class="epilogue-card animate-on-scroll">
+          <span class="epilogue-card__icon">👁️</span>
+          <div class="epilogue-card__title">「見えないものを見る力」</div>
+          <p class="epilogue-card__body">
+            ユーザーの画面には見えない裏側の通信を理解する。DNS、HTTP、リダイレクト、Cookie――表面に現れないデータの流れを「見える化」する力が、デジタル広告運用者の基本素養です。
+          </p>
+        </div>
+
+        <div class="epilogue-card animate-on-scroll">
+          <span class="epilogue-card__icon">🏭</span>
+          <div class="epilogue-card__title">「当社の計測基盤の価値」</div>
+          <p class="epilogue-card__body">
+            なぜsGTM + Stape + CAPIが必要なのか。ブラウザの制約が厳しくなる中、サーバーサイドで正確にデータを捕捉する当社の計測基盤が、クライアントの広告投資を守っています。
+          </p>
+        </div>
+
+        <div class="epilogue-card animate-on-scroll">
+          <span class="epilogue-card__icon">💎</span>
+          <div class="epilogue-card__title">「1CVの重み」</div>
+          <p class="epilogue-card__body">
+            1件のコンバージョンの裏側で動く何十ものサーバーと通信。よし子さんの「資料請求」ボタン1つで、DNS、CDN、Meta、Framer、sGTM、GA4、Google Ads――すべてが連携して動いています。
+          </p>
+        </div>
+
+        <div class="epilogue-card animate-on-scroll">
+          <span class="epilogue-card__icon">🛡️</span>
+          <div class="epilogue-card__title">「プライバシーと計測の両立」</div>
+          <p class="epilogue-card__body">
+            iOS制限（ITP/ATT）下でも正確な計測を実現する当社の技術力。Cookie Keeper、Stape Store、Dup Checker――プライバシーを守りながらデータを活かす仕組みが、私たちの競争力の源泉です。
+          </p>
+        </div>
+
+      </div><!-- /.epilogue-takeaways -->
+
+
+      <!-- 締めくくりのナレーション -->
+      <div class="story-narration animate-on-scroll" style="margin-top: 3rem;">
+        <blockquote>
+          よし子さんは知りません。あの日曜日の朝、スマホの画面をそっとタップしたその指先から、世界中のサーバーが一斉に動き出したことを。<br><br>
+          でも私たちは知っています。<br>
+          その「見えない旅」を設計し、守り、磨き上げるのが、私たちの仕事なのです。
+        </blockquote>
+      </div>
+
+    </div><!-- /.chapter-body -->
+    <!-- EPILOGUE CONTENT END -->
+  </section>
+
+
+  <!-- ====================================================================
+       FOOTER
+       ==================================================================== -->
+  <footer class="production-notes">
+    <div class="production-notes__logo">1900film</div>
+    <p>新人研修教材「よし子さんの見えない旅」</p>
+    <p style="margin-top: 0.75rem;"><a href="glossary.html">用語図鑑を読む</a></p>
+    <p style="margin-top: 0.5rem; font-size: 0.75rem;">Created with care for those just starting their journey in digital advertising.</p>
+  </footer>
+
+
+  <!-- ====================================================================
+       JAVASCRIPT
+       ==================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      // ================================================================
+      // 1. Navigation scroll-linked highlight (IntersectionObserver)
+      // ================================================================
+      const navLinks = document.querySelectorAll('.main-nav__link');
+      const sections = document.querySelectorAll('.cover, .chapter');
+      const nav = document.getElementById('mainNav');
+
+      const sectionObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.id;
+              navLinks.forEach((link) => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + id) {
+                  link.classList.add('active');
+                }
+              });
+            }
+          });
+        },
+        {
+          rootMargin: '-20% 0px -70% 0px',
+          threshold: 0,
+        }
+      );
+
+      sections.forEach((section) => {
+        sectionObserver.observe(section);
+      });
+
+      // Nav shadow on scroll
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 10) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      });
+
+
+      // ================================================================
+      // 2. .animate-on-scroll fade-in trigger (IntersectionObserver)
+      // ================================================================
+      const animElements = document.querySelectorAll('.animate-on-scroll');
+
+      const animObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              animObserver.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          rootMargin: '0px 0px -80px 0px',
+          threshold: 0.1,
+        }
+      );
+
+      animElements.forEach((el) => {
+        animObserver.observe(el);
+      });
+
+
+      // ================================================================
+      // 3. Hamburger menu toggle
+      // ================================================================
+      const hamburger = document.getElementById('hamburger');
+      const navLinksContainer = document.getElementById('navLinks');
+
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        navLinksContainer.classList.toggle('open');
+      });
+
+      // Close menu when a link is clicked (mobile)
+      navLinksContainer.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('open');
+          navLinksContainer.classList.remove('open');
+        });
+      });
+
+
+      // ================================================================
+      // 4. Smooth scroll for nav links
+      // ================================================================
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href').substring(1);
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            const navHeight = nav.offsetHeight;
+            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth',
+            });
+          }
+        });
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
